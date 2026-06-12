@@ -1,0 +1,18 @@
+Day 15 - Docker Basics
+======================
+
+Commands Practiced:
+- docker pull nginx
+- docker run -d -p 8080:80 --name my-nginx nginx
+- docker ps
+- docker logs my-nginx
+- docker exec -it my-nginx /bin/sh
+- docker stop my-nginx
+- docker rm my-nginx
+
+Key Concepts Learned:
+- Image vs Container
+- Port mapping (-p hostPort:containerPort)
+- Detached mode (-d)
+- Exec into a running container
+- nginx config at /etc/nginx/nginx.conf
