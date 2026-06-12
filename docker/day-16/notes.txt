@@ -1,0 +1,27 @@
+Day 16 - Dockerfile
+===================
+
+What is a Dockerfile:
+- A text file with instructions to build a custom image
+- Recipe → Image → Container
+
+Dockerfile Instructions:
+- FROM      → base image to start from (always first line)
+- WORKDIR   → set working directory inside container
+- COPY      → copy files from your machine into image
+- RUN       → run a command while building the image
+- CMD       → command to run when container starts
+- EXPOSE    → document which port the app uses
+- ENV       → set environment variables
+
+Key Commands:
+- docker build -t my-python-app .   → build image from Dockerfile
+- docker run my-python-app          → run the container
+- docker images                     → see your built image
+- docker history my-python-app      → see every layer that was built
+
+What I practiced:
+- Created app.py with print statements
+- Wrote a Dockerfile with FROM, WORKDIR, COPY, CMD
+- Built the image using docker build
+- Ran the container and saw output in terminal
