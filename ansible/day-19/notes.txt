@@ -1,0 +1,31 @@
+Day 19 - Ansible Playbook
+=========================
+
+What is a Playbook:
+- YAML file with list of tasks to run on servers
+- Runs all tasks in one command
+- More powerful than ad-hoc commands
+
+Playbook Structure:
+- name    → description of the play
+- hosts   → which servers to target
+- become  → run as sudo
+- tasks   → list of tasks to execute
+
+Modules Used:
+- apt     → install/remove packages
+- service → start/stop/enable services
+- command → run shell commands
+- debug   → print output to screen
+
+Task Status:
+- ok      → task ran, nothing changed
+- changed → task ran and made a change
+- failed  → task failed
+- unreachable → server not reachable
+
+What I practiced:
+- Wrote nginx.yml playbook
+- Installed nginx on EC2 automatically
+- Started and enabled nginx service
+- Verified nginx running with systemctl status
