@@ -1,0 +1,25 @@
+Day 20 - GitHub Actions Basics
+===============================
+
+What is GitHub Actions:
+- CI/CD tool built directly into GitHub
+- No separate server needed
+- Triggered automatically on code push
+
+Key Concepts:
+- Workflow  → entire automation pipeline (YAML file)
+- Job       → group of steps that run together
+- Step      → single task inside a job
+- Runner    → server that runs your workflow
+- Event     → what triggers the workflow (push, PR)
+- Secrets   → encrypted variables (passwords, API keys)
+
+Workflow File Location:
+- .github/workflows/ci.yml
+
+What I practiced:
+- Created basic CI workflow
+- Triggered on push to main branch
+- Used actions/checkout@v4.2.2
+- Fixed Node.js 24 deprecation warning
+- Saw green checkmark in Actions tab ✅
