@@ -1,0 +1,25 @@
+Day 17 - Docker Compose
+=======================
+
+What is Docker Compose:
+- Tool to run multiple containers together
+- Everything defined in one docker-compose.yml file
+- Start all containers with one command
+
+Key Commands:
+- docker compose up -d      → start all services in background
+- docker compose ps         → list running services
+- docker compose logs       → view logs of all services
+- docker compose down       → stop and remove all services
+
+Key Concepts:
+- services   → each container is a service
+- image      → which image to use
+- ports      → port mapping (host:container)
+- depends_on → start this after another service
+- environment → set environment variables
+
+What I practiced:
+- Single container setup with nginx
+- Multi container setup with nginx + mysql
+- depends_on to link services together
