@@ -1,0 +1,22 @@
+Day 18 - Ansible Basics
+=======================
+
+Key Concepts:
+- Control node = my laptop (WSL)
+- Managed node = AWS EC2 server (13.48.130.61)
+- Inventory file = lists all servers
+- Ansible uses SSH - nothing installed on EC2
+- Module = built-in Ansible action (-m)
+
+Commands Practiced:
+- ansible all -i inventory.ini -m ping
+- ansible all -i inventory.ini -m command -a "uptime"
+- ansible all -i inventory.ini -m command -a "df -h"
+- ansible all -i inventory.ini -m command -a "free -m"
+- ansible all -i inventory.ini -m command -a "cat /etc/os-release"
+
+Results:
+- EC2 running Ubuntu 26.04 LTS
+- 908MB RAM, 26% used
+- 6.7GB disk, 31% used
+- Server responded to all commands successfully
