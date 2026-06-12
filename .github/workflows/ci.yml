@@ -1,0 +1,23 @@
+name: Basic CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print message
+        run: echo "Running CI pipeline for Day 20!"
+
+      - name: Show directory
+        run: ls -la
+
+      - name: Show date
+        run: date
