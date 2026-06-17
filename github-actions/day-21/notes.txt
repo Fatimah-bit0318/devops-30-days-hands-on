@@ -1,0 +1,37 @@
+Day 21 - GitHub Actions Docker Build
+=====================================
+
+What We Did:
+- Created a CI pipeline that automatically builds and runs a Docker image
+- Pipeline triggers on every push to main branch
+
+Pipeline Flow:
+Push code to GitHub
+        ↓
+GitHub Actions triggers automatically
+        ↓
+Checkout code from repo
+        ↓
+Build Docker image using Dockerfile
+        ↓
+Run container and test output ✅
+
+Workflow File Location:
+- .github/workflows/docker-ci.yml
+
+Key Concepts:
+- docker build -t devops-app .  → builds image and tags it
+- docker run devops-app         → runs the container
+- runs-on: ubuntu-latest        → GitHub provides a fresh Ubuntu runner
+- uses: actions/checkout@v4.2.2 → clones your repo into the runner
+
+Files Created:
+- github-actions/day-21/app/app.py        → Python app
+- github-actions/day-21/app/Dockerfile    → Docker instructions
+- .github/workflows/docker-ci.yml         → GitHub Actions pipeline
+
+Why This Matters:
+- Every push automatically builds and tests your Docker image
+- No manual docker build needed
+- If build fails → pipeline fails → you get notified
+- This is exactly what happens in real DevOps teams
