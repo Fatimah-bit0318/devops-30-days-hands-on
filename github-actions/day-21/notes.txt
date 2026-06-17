@@ -35,3 +35,8 @@ Why This Matters:
 - No manual docker build needed
 - If build fails → pipeline fails → you get notified
 - This is exactly what happens in real DevOps teams
+
+1. Push code to GitHub → git push origin main
+2. Go to GitHub repo → click Actions tab
+3. Click Docker CI workflow
+4. Watch each step run with green ticks ✅

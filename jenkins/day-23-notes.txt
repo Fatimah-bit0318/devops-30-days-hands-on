@@ -28,3 +28,12 @@ Key Difference from Freestyle Job:
 Console Output shows:
 - Each stage executing one by one
 - Finished: SUCCESS = all stages passed
+
+1. Open Jenkins → http://<ec2-ip>:8080
+2. Click New Item
+3. Name: my-first-pipeline → Select Pipeline → OK
+4. Scroll to Pipeline section
+5. Paste the Jenkinsfile code above
+6. Click Save → Build Now
+7. Click #1 → Console Output
+8. See all 4 stages running → Finished: SUCCESS ✅

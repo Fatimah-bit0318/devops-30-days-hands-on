@@ -37,3 +37,12 @@ Troubleshooting Done:
 - Fixed disk space (increased EC2 volume to 20GB)
 - Fixed node offline issue via Script Console
 - Lowered disk space monitoring thresholds
+
+1. Open Jenkins → http://<ec2-ip>:8080
+2. Click New Item
+3. Name: my-first-job → Select Freestyle project → OK
+4. Scroll to Build Steps → Add build step → Execute shell
+5. Paste the script above
+6. Click Save → Build Now
+7. Click #1 in Build History → Console Output
+8. See green checkmark ✅
