@@ -38,6 +38,8 @@ Troubleshooting Done:
 - Fixed node offline issue via Script Console
 - Lowered disk space monitoring thresholds
 
+Steps to execute:
+
 1. Open Jenkins → http://<ec2-ip>:8080
 2. Click New Item
 3. Name: my-first-job → Select Freestyle project → OK

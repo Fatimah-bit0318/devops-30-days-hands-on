@@ -36,6 +36,8 @@ Why This Matters:
 - If build fails → pipeline fails → you get notified
 - This is exactly what happens in real DevOps teams
 
+Steps to execute:
+
 1. Push code to GitHub → git push origin main
 2. Go to GitHub repo → click Actions tab
 3. Click Docker CI workflow
