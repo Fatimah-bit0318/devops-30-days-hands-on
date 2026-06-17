@@ -1,0 +1,30 @@
+Day 23 - Jenkins Pipeline
+=========================
+
+What is a Jenkins Pipeline:
+- A series of automated stages defined in code
+- Written in Groovy language
+- More powerful than Freestyle jobs
+
+Pipeline Structure:
+- pipeline  → wraps everything
+- agent any → run on any available node
+- stages    → contains all stages
+- stage     → single stage (Checkout, Build, Test, Deploy)
+- steps     → actual commands inside a stage
+- echo      → print a message
+
+Stages in our Pipeline:
+1. Checkout → get code from repository
+2. Build    → compile/build the application
+3. Test     → run automated tests
+4. Deploy   → deploy to server
+
+Key Difference from Freestyle Job:
+- Freestyle → click buttons in UI to configure
+- Pipeline  → everything written as code (Jenkinsfile)
+- Pipeline as code = can be stored in Git ✅
+
+Console Output shows:
+- Each stage executing one by one
+- Finished: SUCCESS = all stages passed
