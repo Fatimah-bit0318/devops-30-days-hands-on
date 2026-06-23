@@ -1,0 +1,71 @@
+Jenkins Troubleshooting Log
+
+Issue 1:
+Docker build failed.
+
+Error:
+checking context: no permission to read mysql files
+
+Fix:
+Removed MySQL data from Docker build context.
+
+
+Issue 2:
+Port already allocated.
+
+Error:
+Bind for 0.0.0.0:8000 failed
+
+Fix:
+Replaced docker run with docker compose deployment.
+
+
+Issue 3:
+Jenkins UI not loading.
+
+Error:
+ERR_CONNECTION_REFUSED
+
+Fix:
+Restarted Jenkins service.
+Verified Security Group inbound rule for port 8080.
+
+
+Issue 4:
+Jenkins crashed repeatedly.
+
+Error:
+OOM Kill
+
+Fix:
+Restarted Jenkins and cleaned memory usage.
+
+
+Issue 5:
+Django container restarting.
+
+Error:
+Unknown server host 'db_cont'
+
+Fix:
+Changed DB_HOST from db_cont to db.
+
+
+Issue 6:
+MySQL permission issue.
+
+Error:
+Host not allowed to connect.
+
+Fix:
+Removed old database files.
+Recreated MySQL container.
+Verified database initialization.
+
+
+Issue 7:
+Nginx showing default page.
+
+Fix:
+Verified proxy_pass configuration.
+Confirmed Django backend was running.
