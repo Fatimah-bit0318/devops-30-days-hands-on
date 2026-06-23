@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Code') {
+            steps {
+                echo 'Cloning source code'
+                git 'https://github.com/LondheShubham153/django-notes-app.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building Docker image'
+                sh 'docker build -t notes-app:latest .'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing application'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application'
+                sh '''
+                docker compose down || true
+                docker compose up -d --build
+                '''
+            }
+        }
+    }
+}

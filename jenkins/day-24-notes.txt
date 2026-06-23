@@ -1,0 +1,89 @@
+Day 24 - Jenkins CI/CD Project Deployment
+
+Project:
+Django Notes App
+Repository:
+https://github.com/LondheShubham153/django-notes-app
+
+Objective:
+Implement a complete CI/CD pipeline using Jenkins and deploy the application using Docker Compose on AWS EC2.
+
+Tasks Performed:
+
+1. Configured Jenkins Controller-Agent setup.
+2. Connected Jenkins Pipeline with GitHub repository.
+3. Created Build stage to generate Docker images.
+4. Implemented Deploy stage using Docker Compose.
+5. Automated application deployment through Jenkins.
+6. Configured environment variables for Django and MySQL.
+7. Verified Docker container communication.
+8. Deployed application on AWS EC2 instance.
+
+Issues Faced:
+
+1. Jenkins Pipeline Failure
+   - Incorrect command in Jenkinsfile.
+   - Fixed pipeline syntax and commands.
+
+2. Port Conflict
+   - Port 8000 already allocated.
+   - Removed conflicting containers and updated deployment process.
+
+3. Jenkins Service Down
+   - Jenkins became unavailable due to low memory.
+   - Restarted service and verified resource usage.
+
+4. MySQL Connectivity Issue
+   - Incorrect database host configuration.
+   - Updated DB_HOST value in environment configuration.
+
+5. MySQL Permission Error
+   - Django container could not connect to MySQL.
+   - Created required database user permissions.
+
+6. Database Initialization Issue
+   - Database was not created correctly.
+   - Recreated database and applied migrations.
+
+7. Application Access Issue
+   - Application was not accessible externally.
+   - Added HTTP port 80 rule in AWS Security Group.
+
+Pipeline Workflow:
+
+GitHub Repository
+       ↓
+Jenkins Pipeline
+       ↓
+Docker Build
+       ↓
+Docker Compose Deployment
+       ↓
+Django + MySQL Containers
+       ↓
+Application Deployment
+
+Verification Commands:
+
+docker ps
+docker logs django_cont
+docker compose up -d --build
+curl http://localhost
+
+Result:
+
+- Jenkins Pipeline executed successfully.
+- Docker images built successfully.
+- MySQL database connected successfully.
+- Django migrations executed successfully.
+- Application deployed successfully on AWS EC2.
+- Application accessible through browser.
+
+Key Learnings:
+
+- Jenkins Pipeline Automation
+- Docker Compose Deployment
+- Container Networking
+- MySQL Troubleshooting
+- CI/CD Workflow
+- AWS Deployment Validation
