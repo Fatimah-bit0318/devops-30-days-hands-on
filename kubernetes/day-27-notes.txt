@@ -1,0 +1,46 @@
+Day 27 - Kubernetes Troubleshooting
+===================================
+
+Useful Commands
+
+kubectl get pods
+
+kubectl describe pod <pod-name>
+
+kubectl logs <pod-name>
+
+kubectl exec -it <pod-name> -- /bin/sh
+
+kubectl get events
+
+kubectl get deployments
+
+kubectl get svc
+
+kubectl delete pod <pod-name>
+
+Common Errors
+
+ImagePullBackOff
+- Wrong image name.
+- Private registry issue.
+
+CrashLoopBackOff
+- Application crashes repeatedly.
+- Incorrect startup command.
+
+Pending
+- Not enough CPU or Memory.
+- Scheduler unable to place Pod.
+
+Wrong Service Selector
+- Labels do not match Deployment.
+
+Port Mismatch
+- targetPort does not match containerPort.
+
+Learning Outcome
+
+• Learned common Kubernetes errors.
+• Understood debugging commands.
+• Learned to inspect Pods and Services.

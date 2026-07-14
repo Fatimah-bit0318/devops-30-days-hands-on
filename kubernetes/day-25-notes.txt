@@ -1,0 +1,42 @@
+Day 25 - Kubernetes Pods, Deployments & Services
+================================================
+
+Topics Covered
+
+• Pod
+- Smallest deployable unit in Kubernetes.
+- Contains one or more containers.
+- Gets its own IP address.
+
+• Deployment
+- Manages Pods.
+- Supports scaling and rolling updates.
+- Automatically recreates failed Pods.
+
+• Service
+- Exposes Pods inside or outside the cluster.
+- Provides a stable endpoint.
+- Types:
+  - ClusterIP
+  - NodePort
+  - LoadBalancer
+
+Commands Learned
+
+kubectl create deployment nginx-demo --image=nginx
+
+kubectl get deployments
+
+kubectl get pods
+
+kubectl expose deployment nginx-demo --type=NodePort --port=80
+
+kubectl get svc
+
+kubectl scale deployment nginx-demo --replicas=3
+
+Learning Outcome
+
+• Understood Pods and Deployments.
+• Learned how Services expose applications.
+• Learned basic application scaling.

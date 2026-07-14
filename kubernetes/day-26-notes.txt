@@ -1,0 +1,36 @@
+Day 26 - Kubernetes YAML Files
+==============================
+
+Topics Covered
+
+Every Kubernetes resource is defined using YAML.
+
+Main Sections
+
+• apiVersion
+• kind
+• metadata
+• spec
+
+Advantages
+
+• Infrastructure as Code
+• Version Control
+• Easy to update
+• Easy to reproduce deployments
+
+Commands Learned
+
+kubectl apply -f deployment.yaml
+
+kubectl get deployments
+
+kubectl get pods
+
+kubectl describe deployment nginx-deployment
+
+Learning Outcome
+
+• Learned Kubernetes manifest structure.
+• Understood declarative deployment approach.
+• Created Deployment and Service YAML files.

@@ -1,0 +1,25 @@
+kubectl cluster-info
+
+kubectl get nodes
+
+kubectl get pods
+
+kubectl get deployments
+
+kubectl get svc
+
+kubectl get namespaces
+
+kubectl describe pod <pod>
+
+kubectl logs <pod>
+
+kubectl exec -it <pod> -- /bin/sh
+
+kubectl apply -f file.yaml
+
+kubectl delete -f file.yaml
+
+kubectl delete pod <pod>
+
+kubectl scale deployment nginx --replicas=5
