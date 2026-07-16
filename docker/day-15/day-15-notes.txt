@@ -1,0 +1,99 @@
+Day 15 - Docker Basics
+======================
+
+What is Docker?
+
+Docker is an open-source containerization platform that allows developers to package applications along with their dependencies into lightweight containers.
+
+Why Docker?
+
+• Eliminates "It works on my machine" problems.
+• Lightweight compared to Virtual Machines.
+• Fast deployment.
+• Easy application portability.
+• Better resource utilization.
+
+Virtual Machine vs Docker
+
+Virtual Machine
+---------------
+• Runs a complete Operating System.
+• Heavyweight.
+• Slower startup.
+• More resource usage.
+
+Docker Container
+----------------
+• Shares the host OS kernel.
+• Lightweight.
+• Starts within seconds.
+• Less resource usage.
+
+Docker Architecture
+
+                Docker Client
+                      │
+                      ▼
+                Docker Daemon
+                      │
+     ┌────────────────┼────────────────┐
+     ▼                ▼                ▼
+ Docker Images   Docker Containers   Docker Volumes
+
+Important Docker Components
+
+1. Docker Engine
+- Core Docker service.
+
+2. Docker Image
+- Read-only template used to create containers.
+
+3. Docker Container
+- Running instance of an image.
+
+4. Docker Registry
+- Stores Docker images.
+- Example: Docker Hub.
+
+5. Docker Volume
+- Stores persistent data.
+
+6. Docker Network
+- Allows communication between containers.
+
+Docker Workflow
+
+Dockerfile
+     │
+docker build
+     │
+Docker Image
+     │
+docker run
+     │
+Container Running
+
+Common Docker Commands
+
+docker version
+docker info
+docker images
+docker ps
+docker ps -a
+docker pull
+docker run
+docker stop
+docker start
+docker restart
+docker rm
+docker rmi
+docker logs
+docker exec
+
+Learning Outcome
+
+✔ Understood Docker architecture.
+✔ Learned Docker Images and Containers.
+✔ Pulled images from Docker Hub.
+✔ Ran Docker containers.
+✔ Managed Docker containers using CLI.

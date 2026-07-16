@@ -1,0 +1,90 @@
+Day 14 - Terraform Mini Project
+===============================
+
+Project Objective
+
+Build a basic AWS infrastructure using Terraform by provisioning:
+
+• AWS Provider
+• Security Group
+• EC2 Instance
+
+This mini project combines everything learned in previous Terraform lessons.
+
+Why a Mini Project?
+
+• Understand Infrastructure as Code (IaC)
+• Learn project organization
+• Reuse variables
+• Practice real-world Terraform workflow
+
+Project Structure
+
+terraform-project/
+│
+├── provider.tf
+├── variables.tf
+├── main.tf
+├── outputs.tf
+├── terraform.tfvars
+└── README.md
+
+Files Used
+
+provider.tf
+- Configures AWS Provider.
+
+variables.tf
+- Stores reusable variables.
+
+main.tf
+- Defines AWS resources.
+
+terraform.tfvars
+- Stores values for variables.
+
+outputs.tf
+- Displays useful information.
+
+Terraform Workflow
+
+Write Code
+      ↓
+terraform init
+      ↓
+terraform validate
+      ↓
+terraform fmt
+      ↓
+terraform plan
+      ↓
+terraform apply
+      ↓
+Resources Created
+
+Best Practices
+
+• Never hardcode values.
+• Use variables.
+• Keep code modular.
+• Add tags to resources.
+• Validate before applying.
+• Format code using terraform fmt.
+
+Useful Commands
+
+terraform init
+terraform fmt
+terraform validate
+terraform plan
+terraform apply
+terraform output
+terraform state list
+terraform destroy
+
+Learning Outcome
+
+✔ Combined multiple Terraform concepts.
+✔ Built a reusable project.
+✔ Learned project organization.
+✔ Understood Infrastructure as Code workflow.

@@ -1,0 +1,85 @@
+Day 13 - Terraform EC2 Instance & Security Group
+================================================
+
+What is an EC2 Instance?
+
+Amazon EC2 (Elastic Compute Cloud) is a virtual server provided by AWS.
+Terraform allows us to provision EC2 instances automatically using code.
+
+What is a Security Group?
+
+A Security Group acts as a virtual firewall for EC2 instances.
+
+It controls:
+
+• Incoming Traffic (Ingress Rules)
+• Outgoing Traffic (Egress Rules)
+
+Example
+
+SSH  → Port 22
+HTTP → Port 80
+HTTPS → Port 443
+
+Why Security Groups?
+
+• Protect EC2 instances.
+• Allow only required traffic.
+• Improve cloud security.
+
+Terraform Resources Used
+
+1. Provider
+- Connects Terraform to AWS.
+
+2. Variables
+- Makes code reusable.
+
+3. Security Group
+- Opens required ports.
+
+4. EC2 Instance
+- Creates the virtual machine.
+
+5. Outputs
+- Displays useful information after deployment.
+
+Terraform Workflow
+
+Write Code
+      ↓
+terraform init
+      ↓
+terraform validate
+      ↓
+terraform plan
+      ↓
+terraform apply
+      ↓
+EC2 Instance Created
+
+Useful Terraform Commands
+
+terraform init
+
+terraform validate
+
+terraform fmt
+
+terraform plan
+
+terraform apply
+
+terraform output
+
+terraform state list
+
+terraform destroy
+
+Learning Outcome
+
+✔ Learned how to provision EC2 using Terraform.
+✔ Created a reusable Security Group.
+✔ Used variables to avoid hardcoding.
+✔ Displayed outputs after deployment.
+✔ Understood Infrastructure as Code.

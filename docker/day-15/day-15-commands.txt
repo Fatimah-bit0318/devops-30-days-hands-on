@@ -1,0 +1,217 @@
+####################################################
+# Day 15 - Docker Basic Commands
+####################################################
+
+####################################################
+# Check Docker Version
+####################################################
+
+# Shows installed Docker version.
+
+docker version
+
+
+####################################################
+# Docker Information
+####################################################
+
+# Displays Docker Engine information.
+
+docker info
+
+
+####################################################
+# Download an Image
+####################################################
+
+# Pulls image from Docker Hub.
+
+docker pull nginx
+
+docker pull ubuntu
+
+
+####################################################
+# List Images
+####################################################
+
+# Shows downloaded images.
+
+docker images
+
+
+####################################################
+# Run a Container
+####################################################
+
+# Creates and starts a new container.
+
+docker run nginx
+
+# Run container in detached mode.
+
+docker run -d nginx
+
+# Run container with port mapping.
+
+docker run -d -p 8080:80 nginx
+
+
+####################################################
+# List Running Containers
+####################################################
+
+docker ps
+
+
+####################################################
+# List All Containers
+####################################################
+
+docker ps -a
+
+
+####################################################
+# Stop a Container
+####################################################
+
+docker stop <container-id>
+
+
+####################################################
+# Start a Container
+####################################################
+
+docker start <container-id>
+
+
+####################################################
+# Restart a Container
+####################################################
+
+docker restart <container-id>
+
+
+####################################################
+# Remove a Container
+####################################################
+
+docker rm <container-id>
+
+
+####################################################
+# Remove an Image
+####################################################
+
+docker rmi nginx
+
+
+####################################################
+# View Container Logs
+####################################################
+
+docker logs <container-id>
+
+
+####################################################
+# Execute Commands Inside Container
+####################################################
+
+docker exec -it <container-id> /bin/bash
+
+# For Alpine images
+
+docker exec -it <container-id> /bin/sh
+
+
+####################################################
+# Inspect Container
+####################################################
+
+# Shows detailed information.
+
+docker inspect <container-id>
+
+
+####################################################
+# Search Images
+####################################################
+
+docker search nginx
+
+
+####################################################
+# Download and Run in One Command
+####################################################
+
+docker run hello-world
+
+
+####################################################
+# Docker Workflow
+####################################################
+
+# Download Image
+
+docker pull nginx
+
+        ↓
+
+# Create Container
+
+docker run -d nginx
+
+        ↓
+
+# Check Running Containers
+
+docker ps
+
+        ↓
+
+# Stop Container
+
+docker stop <container-id>
+
+        ↓
+
+# Remove Container
+
+docker rm <container-id>
+
+
+####################################################
+# Interview Questions
+####################################################
+
+# What is Docker?
+# Docker is a containerization platform.
+
+# What is Docker Image?
+# A read-only template used to create containers.
+
+# What is Docker Container?
+# A running instance of a Docker image.
+
+# Difference between Image and Container?
+
+# Image
+# Template
+
+# Container
+# Running application
+
+# What is Docker Hub?
+# Public registry for Docker images.
+
+# Difference between Docker and VM?
+
+# VM
+# Full Operating System
+
+# Docker
+# Shares Host OS Kernel
+
+####################################################
+# End of Day 15
+####################################################

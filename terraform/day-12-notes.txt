@@ -1,0 +1,83 @@
+Day 12 - Terraform Basics
+=========================
+
+What is Terraform?
+
+Terraform is an Infrastructure as Code (IaC) tool developed by HashiCorp.
+It allows us to create, modify, and destroy infrastructure using code instead of manually creating resources.
+
+Why Terraform?
+
+• Infrastructure is written as code.
+• Easy to automate.
+• Easy to version control using Git.
+• Can provision resources on AWS, Azure, GCP and many other providers.
+• Ensures consistent infrastructure across environments.
+
+Terraform Workflow
+
+Write Configuration
+        ↓
+terraform init
+        ↓
+terraform validate
+        ↓
+terraform plan
+        ↓
+terraform apply
+        ↓
+Infrastructure Created
+
+Important Terraform Files
+
+provider.tf
+- Defines the cloud provider (AWS).
+
+main.tf
+- Contains the resources to create.
+
+variables.tf
+- Stores input variables.
+
+terraform.tfvars
+- Stores values for variables.
+
+outputs.tf
+- Displays useful information after deployment.
+
+terraform.tfstate
+- Stores the current state of infrastructure.
+
+Important Terraform Commands
+
+terraform init
+- Downloads provider plugins.
+
+terraform fmt
+- Formats Terraform code.
+
+terraform validate
+- Checks configuration syntax.
+
+terraform plan
+- Shows what resources will be created.
+
+terraform apply
+- Creates infrastructure.
+
+terraform destroy
+- Deletes infrastructure.
+
+terraform show
+- Displays Terraform state.
+
+terraform state list
+- Lists managed resources.
+
+Learning Outcome
+
+• Learned Infrastructure as Code.
+• Understood Terraform workflow.
+• Configured AWS Provider.
+• Learned important Terraform files.
+• Practiced Terraform commands.

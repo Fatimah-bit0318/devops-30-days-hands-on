@@ -1,0 +1,56 @@
+Day 11 - AWS VPC Basics
+=======================
+
+What is a VPC?
+
+VPC (Virtual Private Cloud) is your own private network inside AWS where you launch cloud resources securely.
+
+Why VPC?
+
+• Isolates your AWS resources.
+• Provides secure networking.
+• Controls incoming and outgoing traffic.
+
+Main Components
+
+1. VPC
+Private network.
+
+2. Subnet
+Division of a VPC.
+Types:
+• Public Subnet
+• Private Subnet
+
+3. Internet Gateway (IGW)
+Allows internet access.
+
+4. Route Table
+Controls where network traffic goes.
+
+5. NAT Gateway
+Allows private instances to access the internet without exposing them.
+
+6. Security Group
+Instance-level firewall.
+Stateful.
+
+7. Network ACL (NACL)
+Subnet-level firewall.
+Stateless.
+
+Architecture
+
+Internet
+   │
+Internet Gateway
+   │
+Public Subnet
+   │
+EC2 Instance
+
+Learning Outcome
+
+• Understood AWS networking.
+• Learned VPC architecture.
+• Learned Security Groups and NACL.
