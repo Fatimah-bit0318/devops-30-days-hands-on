@@ -1,0 +1,476 @@
+Day 28 - Kubernetes Dashboard & Cluster Management
+==================================================
+
+Objective
+---------
+Learn how to set up a local Kubernetes cluster using Minikube, install the Kubernetes Dashboard, configure secure access using RBAC, and explore Kubernetes resources through the Dashboard and kubectl.
+
+--------------------------------------------------
+
+Topics Covered
+--------------
+
+1. kubectl
+----------
+
+kubectl is the official command-line tool used to communicate with the Kubernetes API Server.
+
+Purpose:
+- Create Kubernetes resources
+- View cluster information
+- Manage applications
+- Troubleshoot workloads
+
+Common Commands:
+
+kubectl version --client
+kubectl get nodes
+kubectl get pods -A
+kubectl get deployments
+kubectl get services
+kubectl get namespaces
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
+
+--------------------------------------------------
+
+2. Minikube
+-----------
+
+Minikube is a lightweight Kubernetes distribution that creates a single-node Kubernetes cluster on a local machine or virtual machine.
+
+Why Minikube?
+
+- Easy to install
+- Lightweight
+- Best for learning Kubernetes
+- Supports Dashboard and Add-ons
+
+Commands Used:
+
+minikube start --driver=docker
+minikube status
+minikube dashboard
+minikube stop
+minikube delete
+
+--------------------------------------------------
+
+3. Kubernetes Dashboard
+-----------------------
+
+Kubernetes Dashboard is the official web-based graphical user interface for Kubernetes.
+
+Using the Dashboard we can:
+
+• View Nodes
+• View Pods
+• View Deployments
+• View ReplicaSets
+• View Services
+• View Namespaces
+• View ConfigMaps
+• View Secrets
+• Monitor Cluster Health
+
+Advantages:
+
+- Easy resource management
+- Visual monitoring
+- View YAML configurations
+- Access logs and events
+- Beginner-friendly interface
+
+--------------------------------------------------
+
+4. Service Account
+------------------
+
+A Service Account is a Kubernetes identity used by applications or users to communicate with the Kubernetes API.
+
+Purpose:
+
+- Authenticate with Kubernetes
+- Access cluster resources
+- Provide secure API access
+
+Service Account Created:
+
+admin-user
+
+--------------------------------------------------
+
+5. RBAC (Role-Based Access Control)
+-----------------------------------
+
+RBAC controls who can access Kubernetes resources and what operations they are allowed to perform.
+
+RBAC Components:
+
+• Role
+• ClusterRole
+• RoleBinding
+• ClusterRoleBinding
+
+Benefits:
+
+- Secure cluster access
+- User authorization
+- Restrict unnecessary permissions
+- Follow least privilege principle
+
+--------------------------------------------------
+
+6. ClusterRole
+--------------
+
+ClusterRole defines permissions across the entire Kubernetes cluster.
+
+Example Permissions:
+
+- View Pods
+- Create Deployments
+- Delete Services
+- Manage Nodes
+- View Secrets
+
+--------------------------------------------------
+
+7. ClusterRoleBinding
+---------------------
+
+ClusterRoleBinding assigns a ClusterRole to a User, Group, or Service Account.
+
+Flow:
+
+Service Account
+        ↓
+ClusterRoleBinding
+        ↓
+ClusterRole
+        ↓
+Permissions Granted
+
+--------------------------------------------------
+
+8. Namespaces
+-------------
+
+Namespaces logically separate Kubernetes resources.
+
+Default Namespaces:
+
+default
+kube-system
+kube-public
+kubernetes-dashboard
+
+Advantages:
+
+- Resource Isolation
+- Better Organization
+- Environment Separation
+- Multi-team Support
+
+--------------------------------------------------
+
+9. Nodes
+---------
+
+A Node is a machine where Kubernetes runs Pods.
+
+In this setup:
+
+EC2 Instance
+      ↓
+Minikube
+      ↓
+Single Kubernetes Node
+
+Node Responsibilities:
+
+- Run Pods
+- Execute Containers
+- Report Cluster Status
+
+--------------------------------------------------
+
+10. Pods
+--------
+
+A Pod is the smallest deployable unit in Kubernetes.
+
+A Pod contains one or more containers that share networking and storage.
+
+Pod Features:
+
+- Runs application containers
+- Shares IP address
+- Shares storage volumes
+- Managed by Deployments
+
+--------------------------------------------------
+
+11. Deployments
+---------------
+
+Deployment manages Pods automatically.
+
+Responsibilities:
+
+- Create Pods
+- Replace failed Pods
+- Perform rolling updates
+- Scale applications
+- Maintain desired state
+
+--------------------------------------------------
+
+12. ReplicaSets
+---------------
+
+ReplicaSet ensures the required number of Pod replicas are always running.
+
+Example:
+
+Desired Replicas = 3
+
+If one Pod crashes,
+
+ReplicaSet automatically creates another Pod.
+
+--------------------------------------------------
+
+13. Services
+------------
+
+A Service exposes Pods inside or outside the Kubernetes cluster.
+
+Types of Services:
+
+ClusterIP
+- Internal communication only
+
+NodePort
+- Exposes application on a Node Port
+
+LoadBalancer
+- Used mainly in Cloud environments
+
+--------------------------------------------------
+
+14. ConfigMaps
+--------------
+
+ConfigMaps store application configuration separately from application code.
+
+Examples:
+
+Database Host
+Environment Variables
+Configuration Files
+
+Benefits:
+
+- Easy configuration management
+- No hardcoded values
+- Reusable configuration
+
+--------------------------------------------------
+
+15. Secrets
+-----------
+
+Secrets securely store sensitive information.
+
+Examples:
+
+Passwords
+API Keys
+Tokens
+Certificates
+
+Benefits:
+
+- Encrypted storage
+- Secure access
+- Better security practices
+
+--------------------------------------------------
+
+Commands Practiced
+------------------
+
+kubectl version --client
+
+kubectl get nodes
+
+kubectl get pods -A
+
+kubectl get deployments
+
+kubectl get services
+
+kubectl get namespaces
+
+kubectl describe pod <pod-name>
+
+kubectl logs <pod-name>
+
+kubectl proxy
+
+minikube start --driver=docker
+
+minikube status
+
+minikube dashboard
+
+--------------------------------------------------
+
+Files Created
+-------------
+
+dashboard-adminuser.yaml
+
+dashboard-rolebinding.yaml
+
+--------------------------------------------------
+
+Learning Outcome
+----------------
+
+By completing Day 28, I learned to:
+
+✔ Install kubectl
+
+✔ Install Minikube
+
+✔ Create a Kubernetes Cluster
+
+✔ Verify Cluster Status
+
+✔ Install Kubernetes Dashboard
+
+✔ Configure RBAC
+
+✔ Create a Service Account
+
+✔ Create a ClusterRoleBinding
+
+✔ Generate Dashboard Login Token
+
+✔ Access Kubernetes Dashboard
+
+✔ Explore Nodes
+
+✔ Explore Namespaces
+
+✔ Explore Pods
+
+✔ Explore Deployments
+
+✔ Explore ReplicaSets
+
+✔ Explore Services
+
+✔ Explore ConfigMaps
+
+✔ Explore Secrets
+
+✔ Understand Kubernetes Cluster Management
+
+--------------------------------------------------
+
+Interview Questions
+-------------------
+
+Q1. What is Kubernetes Dashboard?
+
+Answer:
+Kubernetes Dashboard is the official web-based UI used to manage and monitor Kubernetes clusters.
+
+--------------------------------------------------
+
+Q2. What is kubectl?
+
+Answer:
+kubectl is the command-line tool used to interact with the Kubernetes API Server and manage cluster resources.
+
+--------------------------------------------------
+
+Q3. What is Minikube?
+
+Answer:
+Minikube is a lightweight single-node Kubernetes cluster used for learning, testing, and development.
+
+--------------------------------------------------
+
+Q4. What is RBAC?
+
+Answer:
+RBAC (Role-Based Access Control) controls user permissions and determines who can perform actions within a Kubernetes cluster.
+
+--------------------------------------------------
+
+Q5. What is a Service Account?
+
+Answer:
+A Service Account is a Kubernetes identity used by applications or users to securely access the Kubernetes API.
+
+--------------------------------------------------
+
+Q6. Difference between Role and ClusterRole?
+
+Answer:
+
+Role
+- Namespace-specific permissions
+
+ClusterRole
+- Cluster-wide permissions
+
+--------------------------------------------------
+
+Q7. Difference between RoleBinding and ClusterRoleBinding?
+
+Answer:
+
+RoleBinding
+- Assigns a Role within a namespace
+
+ClusterRoleBinding
+- Assigns a ClusterRole across the entire cluster
+
+--------------------------------------------------
+
+Q8. What is a Pod?
+
+Answer:
+A Pod is the smallest deployable unit in Kubernetes and contains one or more containers.
+
+--------------------------------------------------
+
+Q9. What is a Deployment?
+
+Answer:
+A Deployment manages Pods by creating, updating, scaling, and replacing them automatically.
+
+--------------------------------------------------
+
+Q10. What is a Namespace?
+
+Answer:
+A Namespace is used to logically separate Kubernetes resources within the same cluster.
+
+--------------------------------------------------
+
+Summary
+-------
+
+Day 28 focused on Kubernetes cluster management rather than application deployment.
+
+A Minikube cluster was successfully created on an EC2 instance. The Kubernetes Dashboard was installed and secured using RBAC with a Service Account and ClusterRoleBinding. The Dashboard was accessed successfully, and various Kubernetes resources such as Nodes, Pods, Deployments, ReplicaSets, Services, ConfigMaps, Secrets, and Namespaces were explored. This hands-on session provided a practical understanding of how Kubernetes clusters are managed using both the Dashboard and kubectl.
+
+==================================================
+End of Day 28
+==================================================

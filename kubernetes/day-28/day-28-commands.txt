@@ -1,0 +1,109 @@
+==================================================
+Day 28 - Kubernetes Dashboard Commands
+==================================================
+
+# Install kubectl
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+chmod +x kubectl
+
+sudo mv kubectl /usr/local/bin/
+
+kubectl version --client
+
+--------------------------------------------------
+
+# Install Minikube
+
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+minikube version
+
+--------------------------------------------------
+
+# Start Minikube
+
+minikube start --driver=docker
+
+--------------------------------------------------
+
+# Verify Cluster
+
+minikube status
+
+kubectl cluster-info
+
+kubectl get nodes
+
+kubectl get pods -A
+
+--------------------------------------------------
+
+# Install Kubernetes Dashboard
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+
+--------------------------------------------------
+
+# Create Dashboard Admin User
+
+kubectl apply -f dashboard-adminuser.yaml
+
+--------------------------------------------------
+
+# Create ClusterRoleBinding
+
+kubectl apply -f dashboard-rolebinding.yaml
+
+--------------------------------------------------
+
+# Generate Dashboard Login Token
+
+kubectl -n kubernetes-dashboard create token admin-user
+
+--------------------------------------------------
+
+# Launch Dashboard
+
+minikube dashboard
+
+--------------------------------------------------
+
+# View Kubernetes Resources
+
+kubectl get namespaces
+
+kubectl get deployments -A
+
+kubectl get replicasets -A
+
+kubectl get services -A
+
+kubectl get pods -A
+
+--------------------------------------------------
+
+# Troubleshooting Commands
+
+kubectl describe pod <pod-name>
+
+kubectl logs <pod-name>
+
+--------------------------------------------------
+
+# Stop Cluster
+
+minikube stop
+
+--------------------------------------------------
+
+# Delete Cluster
+
+minikube delete
+
+==================================================
+End of Day 28 Commands
+==================================================
