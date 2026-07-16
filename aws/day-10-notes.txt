@@ -1,0 +1,38 @@
+Day 10 - Amazon S3
+==================
+
+What is Amazon S3?
+
+Amazon S3 (Simple Storage Service) is an object storage service.
+
+Important Concepts
+
+Bucket
+- Container that stores files.
+
+Object
+- Individual file stored inside bucket.
+
+Public Access Block
+- Prevents accidental public access.
+
+Pre-Signed URL
+- Temporary secure link to access an object.
+
+Common Operations
+
+Create Bucket
+
+Upload File
+
+Download File
+
+Delete File
+
+List Objects
+
+Learning Outcome
+
+• Created an S3 bucket.
+• Uploaded files.
+• Accessed files using AWS CLI.

@@ -1,0 +1,44 @@
+Day 9 - Amazon EC2
+==================
+
+What is EC2?
+
+EC2 (Elastic Compute Cloud) is a virtual server in AWS.
+
+Important Concepts
+
+AMI
+- Operating System Image.
+
+Instance Type
+- CPU and Memory configuration.
+
+Key Pair
+- Used to connect securely.
+
+Security Group
+- Virtual firewall for EC2.
+
+Public IP
+- Accessible from Internet.
+
+Private IP
+- Used inside VPC.
+
+Typical Workflow
+
+Launch EC2
+      ↓
+Create Key Pair
+      ↓
+Configure Security Group
+      ↓
+Connect using SSH
+      ↓
+Install Software
+
+Learning Outcome
+
+• Created an EC2 instance.
+• Connected using SSH.
+• Installed Nginx.

@@ -1,0 +1,9 @@
+aws s3 ls
+
+aws s3 mb s3://my-devops-practice-bucket
+
+aws s3 cp file.txt s3://my-devops-practice-bucket/
+
+aws s3 ls s3://my-devops-practice-bucket/
+
+aws s3 presign s3://my-devops-practice-bucket/file.txt

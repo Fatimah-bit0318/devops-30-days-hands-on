@@ -1,0 +1,9 @@
+ssh -i key.pem ubuntu@<public-ip>
+
+sudo apt update
+
+sudo apt install nginx -y
+
+systemctl status nginx
+
+curl localhost

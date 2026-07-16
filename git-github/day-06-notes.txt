@@ -1,0 +1,58 @@
+Day 6 - Git Basics
+==================
+
+What is Git?
+
+Git is a Distributed Version Control System (DVCS) used to track changes in source code and collaborate with teams.
+
+Why Git?
+
+• Tracks file changes
+• Maintains version history
+• Supports team collaboration
+• Easy rollback to previous versions
+
+Important Concepts
+
+Repository (Repo)
+- Storage location for project files.
+
+Commit
+- Snapshot of project changes.
+
+Branch
+- Independent line of development.
+
+Merge
+- Combines branches.
+
+Clone
+- Downloads an existing repository.
+
+Push
+- Uploads local commits to GitHub.
+
+Pull
+- Downloads latest changes.
+
+Git Workflow
+
+Working Directory
+        ↓
+git add
+        ↓
+Staging Area
+        ↓
+git commit
+        ↓
+Local Repository
+        ↓
+git push
+        ↓
+GitHub Repository
+
+Learning Outcome
+
+• Learned Git workflow.
+• Created a local repository.
+• Committed project changes.

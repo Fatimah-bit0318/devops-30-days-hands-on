@@ -1,0 +1,7 @@
+aws configure
+
+aws sts get-caller-identity
+
+aws iam list-users
+
+aws configure list

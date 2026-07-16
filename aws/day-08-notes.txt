@@ -1,0 +1,39 @@
+Day 8 - AWS Basics & IAM
+========================
+
+What is AWS?
+
+Amazon Web Services (AWS) is a cloud platform that provides on-demand computing services.
+
+Important Concepts
+
+Region
+- Geographic location where AWS resources are hosted.
+
+Availability Zone (AZ)
+- Separate data center inside a Region.
+
+IAM (Identity and Access Management)
+
+Used to manage:
+
+• Users
+• Groups
+• Roles
+• Policies
+
+Access Key
+
+Used by CLI and applications to access AWS.
+
+Best Practices
+
+• Never use Root User for daily work.
+• Enable MFA.
+• Grant minimum required permissions.
+
+Learning Outcome
+
+• Understood AWS Regions.
+• Learned IAM concepts.
+• Configured AWS CLI.

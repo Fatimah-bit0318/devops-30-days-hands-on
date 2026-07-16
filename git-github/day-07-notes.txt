@@ -1,0 +1,51 @@
+Day 7 - GitHub & Pull Requests
+==============================
+
+What is GitHub?
+
+GitHub is a cloud platform used to host Git repositories and collaborate on projects.
+
+Important Concepts
+
+Repository
+Branch
+Fork
+Clone
+Commit
+Push
+Pull Request (PR)
+Merge Conflict
+
+Pull Request Workflow
+
+Create Branch
+      ↓
+Make Changes
+      ↓
+Commit
+      ↓
+Push Branch
+      ↓
+Create Pull Request
+      ↓
+Code Review
+      ↓
+Merge into Main
+
+Merge Conflict
+
+Occurs when two users modify the same file.
+
+Solution
+
+• Pull latest changes
+• Resolve conflicts manually
+• Commit again
+• Push changes
+
+Learning Outcome
+
+• Connected local Git to GitHub.
+• Created branches.
+• Understood Pull Requests.
+• Learned merge conflict resolution.
