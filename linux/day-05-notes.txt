@@ -1,0 +1,46 @@
+Day 5 - Linux Networking, SSH & SCP
+===================================
+
+Topics Covered
+
+Networking Basics
+
+IP Address
+
+DNS
+
+Port
+
+Firewall
+
+HTTP
+
+HTTPS
+
+Commands
+
+ip addr
+
+ping
+
+curl
+
+wget
+
+hostname
+
+ss -tulnp
+
+netstat -tulnp
+
+nslookup
+
+SSH
+
+scp
+
+Learning Outcome
+
+• Learned Linux networking.
+• Connected to remote servers using SSH.
+• Transferred files using SCP.

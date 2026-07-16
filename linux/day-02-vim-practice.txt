@@ -1,0 +1,17 @@
+Linux Notes
+
+This file is created to practice Vim editor.
+
+Topics
+
+Linux
+
+DevOps
+
+Docker
+
+Git
+
+Jenkins
+
+Kubernetes

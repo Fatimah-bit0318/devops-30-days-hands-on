@@ -1,0 +1,43 @@
+Day 2 - vi/vim Editor
+=====================
+
+Topics Covered
+
+• Introduction to vi/vim
+• Modes in vim
+• File editing
+• Searching
+• Saving files
+
+Modes
+
+Normal Mode
+Insert Mode
+Command Mode
+
+Useful Commands
+
+i
+
+Esc
+
+:w
+
+:wq
+
+:q!
+
+dd
+
+yy
+
+p
+
+/pattern
+
+:set number
+
+Learning Outcome
+
+• Learned to edit files using vim.
+• Practiced searching and saving files.

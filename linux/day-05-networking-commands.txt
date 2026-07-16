@@ -1,0 +1,19 @@
+ip addr
+
+hostname
+
+ping google.com
+
+curl localhost
+
+wget https://example.com
+
+ss -tulnp
+
+netstat -tulnp
+
+nslookup google.com
+
+ssh ubuntu@<public-ip>
+
+scp file.txt ubuntu@<public-ip>:/home/ubuntu/

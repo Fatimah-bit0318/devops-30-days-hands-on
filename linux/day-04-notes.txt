@@ -1,0 +1,38 @@
+Day 4 - Processes, Services & Logs
+==================================
+
+Topics Covered
+
+Processes
+
+Services
+
+Logs
+
+Useful Commands
+
+ps aux
+
+top
+
+htop
+
+kill
+
+systemctl status nginx
+
+systemctl start nginx
+
+systemctl stop nginx
+
+systemctl restart nginx
+
+journalctl
+
+tail -f /var/log/syslog
+
+Learning Outcome
+
+• Learned process management.
+• Managed Linux services.
+• Checked system logs.

@@ -1,0 +1,36 @@
+Day 3 - Linux Permissions & Users
+=================================
+
+Topics Covered
+
+Linux Permissions
+
+r = Read
+
+w = Write
+
+x = Execute
+
+Commands
+
+chmod
+
+chown
+
+whoami
+
+id
+
+groups
+
+sudo
+
+useradd
+
+passwd
+
+Learning Outcome
+
+• Learned Linux permissions.
+• Created executable shell scripts.
+• Understood users and groups.

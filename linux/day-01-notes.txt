@@ -1,0 +1,47 @@
+Day 1 - DevOps Basics & Linux Navigation
+========================================
+
+Topics Covered
+
+• What is DevOps?
+DevOps is a culture that combines Development and Operations to automate software delivery.
+
+DevOps Workflow
+
+Developer
+   ↓
+GitHub
+   ↓
+CI/CD Pipeline
+   ↓
+Docker Image
+   ↓
+Infrastructure
+   ↓
+Deployment
+   ↓
+Monitoring
+
+Basic Linux Commands
+
+pwd
+ls
+ls -la
+cd
+mkdir
+touch
+cat
+less
+head
+tail
+cp
+mv
+rm
+history
+clear
+
+Learning Outcome
+
+• Learned Linux file system navigation.
+• Understood basic DevOps workflow.
+• Practiced essential Linux commands.

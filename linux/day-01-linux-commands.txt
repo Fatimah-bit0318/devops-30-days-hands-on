@@ -1,0 +1,23 @@
+pwd
+
+ls
+
+ls -la
+
+mkdir devops
+
+cd devops
+
+touch notes.txt
+
+cat notes.txt
+
+cp notes.txt backup.txt
+
+mv backup.txt notes-backup.txt
+
+rm notes-backup.txt
+
+history
+
+clear
