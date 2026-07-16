@@ -1,57 +1,37 @@
 # 🚀 DevOps 30 Days Hands-on Roadmap
 
-A hands-on DevOps learning repository documenting my 30-day journey through Linux, Git, AWS, Terraform, Docker, Jenkins, Kubernetes, and CI/CD.
+Welcome to my **DevOps 30 Days Hands-on Roadmap** repository!
 
-This repository contains:
-- 📚 Daily learning notes
-- 💻 Hands-on practice files
-- 🛠️ Commands and configuration files
-- 📖 Troubleshooting guides
-- 🚀 Mini projects
+This repository documents my journey of learning DevOps through daily hands-on practice. It includes theory notes, practical exercises, configuration files, commands, mini projects, and troubleshooting guides covering the essential DevOps tools and technologies.
+
+The goal of this repository is to build a strong foundation in DevOps while maintaining well-structured documentation for revision, interview preparation, and future reference.
 
 ---
 
-# 📅 Roadmap Progress
+# 📚 Topics Covered
 
-| Day | Topic | Status |
-|-----|-------|--------|
-| 1 | Linux Basics & Navigation | ✅ Completed |
-| 2 | Linux Editors (vi/vim) | ✅ Completed |
-| 3 | Linux Users & Permissions | ✅ Completed |
-| 4 | Linux Processes & Services | ✅ Completed |
-| 5 | Linux Networking & SSH | ✅ Completed |
-| 6 | Git Basics | ✅ Completed |
-| 7 | GitHub & Branching | ✅ Completed |
-| 8 | AWS IAM | ✅ Completed |
-| 9 | AWS EC2 | ✅ Completed |
-| 10 | AWS S3 | ✅ Completed |
-| 11 | AWS VPC | ✅ Completed |
-| 12 | Terraform Basics | ✅ Completed |
-| 13 | Terraform EC2 & Security Groups | ✅ Completed |
-| 14 | Terraform Mini Project | ✅ Completed |
-| 15 | Docker Basics | ✅ Completed |
-| 16 | Docker Images & Containers | ✅ Completed |
-| 17 | Docker Compose | ✅ Completed |
-| 18 | Docker Networking | ✅ Completed |
-| 19 | Docker Volumes | ✅ Completed |
-| 20 | Dockerizing Django Application | ✅ Completed |
-| 21 | Jenkins Installation & Setup | ✅ Completed |
-| 22 | Jenkins Freestyle Jobs | ✅ Completed |
-| 23 | Jenkins Pipeline | ✅ Completed |
-| 24 | Kubernetes Introduction | ✅ Completed |
-| 25 | Pods, Deployments & Services | ✅ Completed |
-| 26 | Kubernetes YAML | ✅ Completed |
-| 27 | Kubernetes Troubleshooting | ✅ Completed |
-| 28 | CI/CD with Kubernetes | ✅ Completed |
-| 29 | In Progress | ⏳ |
-| 30 | In Progress | ⏳ |
+Throughout this roadmap, I explore the following technologies and concepts:
+
+- 🐧 Linux Administration
+- 🌿 Git & GitHub
+- ☁️ AWS Cloud (IAM, EC2, S3, VPC)
+- 🌍 Terraform (Infrastructure as Code)
+- 🐳 Docker
+- 🔧 Jenkins
+- ☸️ Kubernetes
+- 🚀 CI/CD Pipelines
+- 📦 Application Deployment
+- 📊 DevOps Best Practices
+
+This repository is updated regularly as I continue progressing through the roadmap.
 
 ---
 
 # 📂 Repository Structure
 
 ```text
-.
+devops-30-days-hands-on/
+│
 ├── linux/
 ├── git-github/
 ├── aws/
@@ -62,51 +42,44 @@ This repository contains:
 └── README.md
 ```
 
-Each folder contains:
+Each technology folder contains:
+
 - 📝 Daily Notes
-- 💻 Commands
-- 📄 YAML / Terraform / Docker files
+- 💻 Practical Commands
+- ⚙️ Configuration Files
+- 📄 YAML / Terraform / Docker Files
+- 🛠️ Mini Projects
 - 📖 Troubleshooting Notes
-- 🛠️ Hands-on Practice
 
 ---
 
-# 📘 Topics Covered
+# 📖 What You'll Find
 
-## 🐧 Linux
+### 🐧 Linux
 - Linux Basics
 - File System
 - Users & Permissions
+- Process Management
+- Services
 - Networking
 - SSH & SCP
-- Process Management
-- Services & Logs
 
----
-
-## 🌿 Git & GitHub
-
-- Git Workflow
+### 🌿 Git & GitHub
+- Git Basics
 - Branching
-- Merge
+- Merging
 - Pull Requests
-- GitHub Repository Management
-- Version Control
+- GitHub Workflow
+- Repository Management
 
----
-
-## ☁️ AWS
-
+### ☁️ AWS
 - IAM
 - EC2
 - S3
 - VPC
 - Security Groups
 
----
-
-## 🌍 Terraform
-
+### 🌍 Terraform
 - Infrastructure as Code (IaC)
 - Providers
 - Variables
@@ -115,36 +88,29 @@ Each folder contains:
 - Security Groups
 - Terraform Project Structure
 
----
-
-## 🐳 Docker
-
+### 🐳 Docker
 - Docker Architecture
 - Images
 - Containers
 - Dockerfile
 - Docker Compose
-- Networks
-- Volumes
+- Docker Networks
+- Docker Volumes
 - Dockerizing Applications
 
----
-
-## 🔧 Jenkins
-
+### 🔧 Jenkins
 - Jenkins Installation
 - Freestyle Jobs
 - Pipelines
 - Jenkinsfile
 - CI/CD Basics
-- Automated Build & Deploy
+- Automated Build & Deployment
 
----
-
-## ☸️ Kubernetes
-
+### ☸️ Kubernetes
+- Kubernetes Architecture
 - Pods
 - Deployments
+- ReplicaSets
 - Services
 - Namespaces
 - ConfigMaps
@@ -157,8 +123,8 @@ Each folder contains:
 - HPA & VPA
 - Helm
 - Ingress
-- CI/CD Integration
-- Troubleshooting
+- Kubernetes Troubleshooting
+- CI/CD with Kubernetes
 
 ---
 
@@ -179,77 +145,80 @@ Each folder contains:
 
 ---
 
-# 📂 Supporting Files
+# 📁 Supporting Files
 
-This repository includes practical configuration files such as:
+This repository includes practical supporting files such as:
 
 - Dockerfile
 - docker-compose.yml
 - Jenkinsfile
 - Terraform (.tf) files
 - Kubernetes YAML manifests
-- Shell scripts
-- Troubleshooting guides
-- Command references
+- Shell Scripts
+- Command References
+- Troubleshooting Guides
+- Configuration Files
 
 ---
 
-# 📖 Learning Approach
+# 📚 Learning Approach
 
-For each day I maintain:
+For every topic, I maintain:
 
-- 📚 Theory Notes
-- 💻 Practical Commands
-- 🛠️ Configuration Files
-- 📄 Supporting Resources
-- 🚀 Hands-on Exercises
+- 📖 Easy-to-understand theory notes
+- 💻 Hands-on commands
+- ⚙️ Configuration files
+- 🛠️ Practical examples
+- 📝 Supporting resources
+- 🚀 Mini projects (where applicable)
 
-This helps reinforce concepts while building a reusable DevOps reference.
+The aim is to learn concepts while also applying them in practical scenarios.
 
 ---
 
-# 📈 Skills Gained
+# 🎯 Skills Being Developed
 
 - Linux Administration
-- Git & GitHub Workflow
-- AWS Fundamentals
-- Infrastructure as Code with Terraform
+- Version Control with Git
+- GitHub Collaboration
+- AWS Cloud Fundamentals
+- Infrastructure as Code using Terraform
 - Docker Containerization
-- Jenkins CI/CD
+- Jenkins Automation
 - Kubernetes Orchestration
+- CI/CD Pipeline Development
 - Application Deployment
-- Basic Troubleshooting
+- Basic DevOps Troubleshooting
 
 ---
 
-# 🎯 Future Goals
+# 🚀 Future Improvements
 
-- Complete the remaining roadmap days.
-- Build end-to-end CI/CD pipelines.
-- Deploy applications to Kubernetes.
-- Learn Helm and GitOps.
-- Explore monitoring with Prometheus & Grafana.
+As I continue this roadmap, I plan to:
 
----
-
-# 📌 How to Use This Repository
-
-1. Browse the folder for the technology you want to learn.
-2. Read the daily notes.
-3. Review the supporting files.
-4. Practice the commands.
-5. Build the examples yourself.
+- Build complete CI/CD pipelines
+- Deploy applications on Kubernetes
+- Explore Helm Charts
+- Learn GitOps concepts
+- Implement monitoring using Prometheus and Grafana
+- Work on real-world DevOps projects
 
 ---
 
-# ⭐ Acknowledgements
+# 🤝 Contribution
 
-This repository documents my personal DevOps learning journey through a structured 30-day hands-on roadmap. It serves as a study guide, practice log, and reference for future projects and interview preparation.
+This repository is primarily a personal learning journal. However, if you have suggestions, improvements, or best practices to share, feel free to open an issue or submit a pull request.
 
 ---
 
-## 📬 Connect
+# ⭐ If You Like This Repository
 
-If you found this repository useful, feel free to ⭐ star it and explore the notes and examples.
+If you find this repository useful for learning DevOps, consider giving it a ⭐ on GitHub.
+
+---
+
+# 📌 Note
+
+This repository is created for educational purposes as part of my hands-on DevOps learning journey. The notes, examples, and projects are continuously updated as I learn and practice new concepts.
 
 Happy Learning! 🚀
