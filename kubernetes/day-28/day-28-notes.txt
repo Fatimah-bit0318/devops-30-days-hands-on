@@ -1,476 +1,1194 @@
-Day 28 - Kubernetes Dashboard & Cluster Management
-==================================================
+# 🚀 Day 28 — CI/CD Pipeline with GitHub Actions, AWS ECR & Kubernetes
+
+## 📌 Objective
+
+The goal of Day 28 was to implement an **end-to-end CI/CD pipeline** for a containerized Flask application.
+
+The pipeline automatically:
+
+1. Detects code changes pushed to GitHub
+2. Runs automated tests using Pytest
+3. Generates application build metadata
+4. Builds a Docker image
+5. Pushes the Docker image to AWS ECR
+6. Updates the Kubernetes deployment
+7. Performs a rolling update
+8. Runs the latest application version inside Kubernetes
+
+### Final CI/CD Flow
+
+```text
+Developer
+    │
+    │ git push
+    ▼
+GitHub Repository
+    │
+    ▼
+GitHub Actions
+    │
+    ▼
+Automated Testing
+    │
+    ▼
+Docker Image Build
+    │
+    ▼
+AWS ECR
+    │
+    ▼
+Kubernetes Deployment
+    │
+    ▼
+Application Running
+    │
+    ▼
+Status: Healthy ✅
+```
+
+---
+
+# 🔗 Project Repository
+
+The complete source code for the Day 28 project is available here:
+
+**GitHub Repository:**  
+[Docker Image Information Dashboard — CI/CD Project]-https://github.com/Fatimah-bit0318/docker-image-dashboard-cicd.git
+
+### The project repository contains:
+
+```text
+├── Flask Web Application
+├── Dockerfile
+├── Automated Pytest Tests
+├── GitHub Actions Workflow
+├── AWS ECR Integration
+├── Kubernetes Deployment
+├── Kubernetes Service
+└── CI/CD Build Metadata
+```
+
+---
+
+# 🛠️ Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| Python | Application programming language |
+| Flask | Web application framework |
+| Gunicorn | Production application server |
+| Pytest | Automated testing |
+| Git | Version control |
+| GitHub | Source code repository |
+| GitHub Actions | CI/CD automation |
+| AWS EC2 | CI/CD runner and Minikube host |
+| AWS IAM | AWS permissions and access control |
+| Docker | Application containerization |
+| AWS ECR | Private Docker image registry |
+| Kubernetes | Container orchestration |
+| Minikube | Kubernetes cluster used for the project |
+
+---
+
+# 📂 Project Structure
+
+The main project was organized as:
+
+```text
+docker-image-dashboard/
+│
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
+│
+├── k8s/
+│   ├── deployment.yaml
+│   └── service.yaml
+│
+├── templates/
+│   └── index.html
+│
+├── tests/
+│   └── test_app.py
+│
+├── app.py
+├── Dockerfile
+├── requirements.txt
+├── .dockerignore
+├── .gitignore
+└── README.md
+```
+
+---
+
+# 1. 🐍 Flask Application
 
-Objective
----------
-Learn how to set up a local Kubernetes cluster using Minikube, install the Kubernetes Dashboard, configure secure access using RBAC, and explore Kubernetes resources through the Dashboard and kubectl.
+I created a Flask-based application called:
+
+**Docker Image Information Dashboard**
+
+The purpose of this application is to display information about the currently deployed application and Docker image.
+
+The application provides three main endpoints:
 
---------------------------------------------------
+| Endpoint | Purpose |
+|---|---|
+| `/` | Displays the web dashboard |
+| `/info` | Returns application and deployment metadata |
+| `/health` | Checks whether the application is healthy |
 
-Topics Covered
---------------
+The dashboard displays information such as:
 
-1. kubectl
-----------
+```text
+Application Name
+Application Version
+Build Number
+Docker Image Tag
+Git Commit SHA
+Deployment Time
+Environment
+Container/Pod Hostname
+Health Status
+```
 
-kubectl is the official command-line tool used to communicate with the Kubernetes API Server.
+This makes it possible to identify exactly **which version and Git commit are currently deployed**.
 
-Purpose:
-- Create Kubernetes resources
-- View cluster information
-- Manage applications
-- Troubleshoot workloads
+---
 
-Common Commands:
+# 2. 🧪 Automated Testing with Pytest
 
-kubectl version --client
-kubectl get nodes
-kubectl get pods -A
-kubectl get deployments
-kubectl get services
-kubectl get namespaces
-kubectl describe pod <pod-name>
-kubectl logs <pod-name>
+Before deploying the application, automated tests are executed using **Pytest**.
 
---------------------------------------------------
+The tests are stored in:
 
-2. Minikube
------------
+```text
+tests/test_app.py
+```
 
-Minikube is a lightweight Kubernetes distribution that creates a single-node Kubernetes cluster on a local machine or virtual machine.
+The tests verify important application routes such as:
 
-Why Minikube?
+```text
+/
 
-- Easy to install
-- Lightweight
-- Best for learning Kubernetes
-- Supports Dashboard and Add-ons
+/health
+```
 
-Commands Used:
+Final test result:
 
-minikube start --driver=docker
-minikube status
-minikube dashboard
-minikube stop
-minikube delete
+```text
+2 passed
+```
 
---------------------------------------------------
+The basic CI quality gate is:
 
-3. Kubernetes Dashboard
------------------------
+```text
+          Run Tests
+              │
+       ┌──────┴──────┐
+       │             │
+      PASS          FAIL
+       │             │
+       ▼             ▼
+Continue CI/CD    Stop Pipeline
+       │
+       ▼
+Build & Deploy
+```
 
-Kubernetes Dashboard is the official web-based graphical user interface for Kubernetes.
+This helps prevent broken application code from being deployed.
 
-Using the Dashboard we can:
+---
 
-• View Nodes
-• View Pods
-• View Deployments
-• View ReplicaSets
-• View Services
-• View Namespaces
-• View ConfigMaps
-• View Secrets
-• Monitor Cluster Health
+# 3. 🐳 Docker Containerization
 
-Advantages:
+The Flask application was containerized using **Docker**.
 
-- Easy resource management
-- Visual monitoring
-- View YAML configurations
-- Access logs and events
-- Beginner-friendly interface
+The Docker image contains:
 
---------------------------------------------------
+```text
+Python Runtime
+      +
+Flask Application
+      +
+Python Dependencies
+      +
+Gunicorn
+      +
+CI/CD Build Metadata
+```
 
-4. Service Account
-------------------
+The `Dockerfile` was configured to receive build information from the CI/CD pipeline.
 
-A Service Account is a Kubernetes identity used by applications or users to communicate with the Kubernetes API.
+Important metadata includes:
 
-Purpose:
+```text
+APP_VERSION
+BUILD_NUMBER
+IMAGE_TAG
+GIT_COMMIT
+```
 
-- Authenticate with Kubernetes
-- Access cluster resources
-- Provide secure API access
+This information is available to the application at runtime.
 
-Service Account Created:
+---
 
-admin-user
+# 4. 🔢 Build and Version Tracking
 
---------------------------------------------------
+The GitHub Actions pipeline automatically generates information for each deployment.
 
-5. RBAC (Role-Based Access Control)
------------------------------------
+For example:
 
-RBAC controls who can access Kubernetes resources and what operations they are allowed to perform.
+```text
+App Version  : 1.0.10
+Build Number : 10
+Image Tag    : 8481176
+Git Commit   : 8481176e93715273570cfdf7b2b7b0b5a1f1ef23
+Environment  : Production
+```
 
-RBAC Components:
-
-• Role
-• ClusterRole
-• RoleBinding
-• ClusterRoleBinding
-
-Benefits:
-
-- Secure cluster access
-- User authorization
-- Restrict unnecessary permissions
-- Follow least privilege principle
-
---------------------------------------------------
-
-6. ClusterRole
---------------
-
-ClusterRole defines permissions across the entire Kubernetes cluster.
-
-Example Permissions:
-
-- View Pods
-- Create Deployments
-- Delete Services
-- Manage Nodes
-- View Secrets
-
---------------------------------------------------
-
-7. ClusterRoleBinding
----------------------
-
-ClusterRoleBinding assigns a ClusterRole to a User, Group, or Service Account.
-
-Flow:
-
-Service Account
-        ↓
-ClusterRoleBinding
-        ↓
-ClusterRole
-        ↓
-Permissions Granted
-
---------------------------------------------------
-
-8. Namespaces
--------------
-
-Namespaces logically separate Kubernetes resources.
-
-Default Namespaces:
-
-default
-kube-system
-kube-public
-kubernetes-dashboard
-
-Advantages:
-
-- Resource Isolation
-- Better Organization
-- Environment Separation
-- Multi-team Support
-
---------------------------------------------------
-
-9. Nodes
----------
-
-A Node is a machine where Kubernetes runs Pods.
-
-In this setup:
-
-EC2 Instance
-      ↓
-Minikube
-      ↓
-Single Kubernetes Node
-
-Node Responsibilities:
-
-- Run Pods
-- Execute Containers
-- Report Cluster Status
-
---------------------------------------------------
-
-10. Pods
---------
-
-A Pod is the smallest deployable unit in Kubernetes.
-
-A Pod contains one or more containers that share networking and storage.
-
-Pod Features:
-
-- Runs application containers
-- Shares IP address
-- Shares storage volumes
-- Managed by Deployments
-
---------------------------------------------------
-
-11. Deployments
----------------
-
-Deployment manages Pods automatically.
-
-Responsibilities:
-
-- Create Pods
-- Replace failed Pods
-- Perform rolling updates
-- Scale applications
-- Maintain desired state
-
---------------------------------------------------
-
-12. ReplicaSets
----------------
-
-ReplicaSet ensures the required number of Pod replicas are always running.
+The short Git commit SHA can be used as a unique Docker image tag.
 
 Example:
 
-Desired Replicas = 3
+```text
+docker-image-dashboard:8481176
+```
 
-If one Pod crashes,
+This provides **deployment traceability**.
 
-ReplicaSet automatically creates another Pod.
+If there is a problem with a deployment, we can identify exactly:
 
---------------------------------------------------
+```text
+Which build was deployed?
+Which Docker image was used?
+Which Git commit created it?
+Which application version is running?
+```
 
-13. Services
-------------
+---
 
-A Service exposes Pods inside or outside the Kubernetes cluster.
+# 5. ⚙️ GitHub Actions CI/CD Pipeline
 
-Types of Services:
+The CI/CD workflow was created in:
 
-ClusterIP
-- Internal communication only
+```text
+.github/workflows/deploy.yml
+```
 
-NodePort
-- Exposes application on a Node Port
+The workflow is triggered when code is pushed to the:
 
-LoadBalancer
-- Used mainly in Cloud environments
+```text
+main
+```
 
---------------------------------------------------
+branch.
 
-14. ConfigMaps
---------------
+### Pipeline Stages
 
-ConfigMaps store application configuration separately from application code.
+```text
+Git Push
+    │
+    ▼
+Checkout Repository
+    │
+    ▼
+Set Up Python
+    │
+    ▼
+Install Dependencies
+    │
+    ▼
+Run Pytest
+    │
+    ▼
+Generate Build Metadata
+    │
+    ▼
+Authenticate to AWS ECR
+    │
+    ▼
+Build Docker Image
+    │
+    ▼
+Push Docker Image to AWS ECR
+    │
+    ▼
+Update Kubernetes Deployment
+    │
+    ▼
+Wait for Kubernetes Rollout
+    │
+    ▼
+Deployment Successful ✅
+```
 
-Examples:
+The final GitHub Actions workflow completed successfully with all pipeline stages showing green.
 
-Database Host
+---
+
+# 6. 🖥️ GitHub Actions Self-Hosted Runner
+
+An AWS EC2 instance was configured as a:
+
+**GitHub Actions Self-Hosted Runner**
+
+The self-hosted runner receives CI/CD jobs from GitHub and executes them on the EC2 instance.
+
+The runner performs operations such as:
+
+```text
+Install Python dependencies
+Run Pytest
+Build Docker images
+Authenticate with AWS ECR
+Push Docker images
+Execute kubectl commands
+Deploy to Kubernetes
+```
+
+### Flow
+
+```text
+GitHub
+   │
+   ▼
+GitHub Actions
+   │
+   │ Sends Job
+   ▼
+AWS EC2
+Self-Hosted Runner
+   │
+   ▼
+Execute CI/CD Commands
+```
+
+When the runner is ready:
+
+```text
+Connected to GitHub
+
+Listening for Jobs
+```
+
+When a workflow starts:
+
+```text
+Running job: deploy
+```
+
+A successful workflow finishes with:
+
+```text
+Job deploy completed with result: Succeeded
+```
+
+---
+
+# 7. 📦 AWS ECR Integration
+
+AWS **Elastic Container Registry (ECR)** was implemented as the private container registry for the project.
+
+### Role of ECR
+
+ECR stores the Docker images created by the CI/CD pipeline.
+
+```text
+GitHub Actions
+      │
+      ▼
+Build Docker Image
+      │
+      ▼
+Push Image
+      │
+      ▼
+AWS ECR
+      │
+      ▼
+Kubernetes Pulls Image
+      │
+      ▼
+Application Runs
+```
+
+Originally, the project used Docker Hub:
+
+```text
+Docker Build
+     ↓
+Docker Hub
+     ↓
+Kubernetes
+```
+
+The final implementation uses:
+
+```text
+Docker Build
+     ↓
+AWS ECR
+     ↓
+Kubernetes
+```
+
+### Important Difference
+
+```text
+AWS ECR
+   =
+Stores Docker Images
+
+Kubernetes
+   =
+Runs and Manages Containers
+```
+
+ECR does **not** run the application.
+
+It stores the container image that Kubernetes uses to create the application container.
+
+---
+
+# 8. 🔐 AWS IAM Role
+
+An IAM role was attached to the EC2 instance:
+
+```text
+EC2-ECR-CICD-Role
+```
+
+The IAM role provides AWS permissions required by the CI/CD environment to communicate with ECR.
+
+The authentication model is:
+
+```text
+EC2 Instance
+      │
+      ▼
+IAM Role
+      │
+      ▼
+AWS Permissions
+      │
+      ▼
+AWS ECR
+```
+
+Using an IAM role is preferable to placing permanent AWS access keys directly inside:
+
+```text
+Application code
+GitHub repository
+Dockerfile
+CI/CD scripts
+```
+
+---
+
+# 9. ☸️ Kubernetes Deployment
+
+The application was deployed using Kubernetes.
+
+For this project, **Minikube** was running on the AWS EC2 instance.
+
+The Kubernetes configuration is stored in:
+
+```text
+k8s/
+├── deployment.yaml
+└── service.yaml
+```
+
+### Deployment
+
+The Kubernetes Deployment manages:
+
+```text
+Application Pods
+Container Images
 Environment Variables
-Configuration Files
+Replica Management
+Rolling Updates
+```
 
-Benefits:
+### Service
 
-- Easy configuration management
-- No hardcoded values
-- Reusable configuration
+The Kubernetes Service provides network access to the application pods.
 
---------------------------------------------------
+The successful pod status was:
 
-15. Secrets
------------
+```text
+READY   STATUS
+1/1     Running
+```
 
-Secrets securely store sensitive information.
+---
 
-Examples:
+# 10. 🔒 Private ECR Authentication
 
-Passwords
-API Keys
-Tokens
-Certificates
+The AWS ECR repository is private.
 
-Benefits:
+When Kubernetes first attempted to pull the ECR image, the new pod failed with:
 
-- Encrypted storage
-- Secure access
-- Better security practices
+```text
+ImagePullBackOff
+```
 
---------------------------------------------------
+### Why did this happen?
 
-Commands Practiced
-------------------
+GitHub Actions could successfully:
 
-kubectl version --client
+```text
+Build Image
+    ↓
+Login to ECR
+    ↓
+Push Image ✅
+```
 
-kubectl get nodes
+However, Kubernetes separately needed permission to:
 
-kubectl get pods -A
+```text
+Authenticate to ECR
+    ↓
+Pull Private Image
+```
 
-kubectl get deployments
+Without authentication:
 
-kubectl get services
+```text
+Kubernetes
+     │
+     ▼
+Private ECR
+     │
+     X
+Authentication Missing
+     │
+     ▼
+ImagePullBackOff ❌
+```
 
-kubectl get namespaces
+---
 
-kubectl describe pod <pod-name>
+# 11. 🔑 Kubernetes ECR Secret
 
-kubectl logs <pod-name>
+To allow Kubernetes to pull the private image, a Docker registry secret was created:
 
-kubectl proxy
+```text
+ecr-secret
+```
 
-minikube start --driver=docker
+The Kubernetes Deployment was configured with:
 
-minikube status
+```yaml
+imagePullSecrets:
+  - name: ecr-secret
+```
 
-minikube dashboard
+The final flow became:
 
---------------------------------------------------
+```text
+Kubernetes
+     │
+     ▼
+ecr-secret
+     │
+     ▼
+Authenticate with AWS ECR
+     │
+     ▼
+Pull Docker Image
+     │
+     ▼
+Create Container
+     │
+     ▼
+Pod Running ✅
+```
 
-Files Created
--------------
+### Important Note
 
-dashboard-adminuser.yaml
+AWS ECR authorization tokens are temporary.
 
-dashboard-rolebinding.yaml
+For this learning project, an ECR pull secret was used.
 
---------------------------------------------------
+In a production environment, ECR authentication should be automated using an appropriate AWS-integrated or credential-refresh mechanism.
 
-Learning Outcome
-----------------
+---
 
-By completing Day 28, I learned to:
+# 12. 🔄 Kubernetes Rolling Update
 
-✔ Install kubectl
+When the new ECR-based image was deployed, Kubernetes performed a rolling update.
 
-✔ Install Minikube
+Initially:
 
-✔ Create a Kubernetes Cluster
+```text
+Old Pod → Running
+New Pod → Starting
+```
 
-✔ Verify Cluster Status
+After the new pod successfully started:
 
-✔ Install Kubernetes Dashboard
+```text
+New Pod → 1/1 Running
+Old Pod → Terminating
+```
 
-✔ Configure RBAC
+Final state:
 
-✔ Create a Service Account
+```text
+New Pod → Running ✅
+Old Pod → Removed
+```
 
-✔ Create a ClusterRoleBinding
+### Rolling Update Flow
 
-✔ Generate Dashboard Login Token
+```text
+Old Application Running
+          │
+          ▼
+New Pod Created
+          │
+          ▼
+New Image Pulled from ECR
+          │
+          ▼
+New Container Started
+          │
+          ▼
+New Pod Becomes Ready
+          │
+          ▼
+Old Pod Terminated
+```
 
-✔ Access Kubernetes Dashboard
+This provides a controlled way of replacing an older application version.
 
-✔ Explore Nodes
+---
 
-✔ Explore Namespaces
+# 13. 🌐 Application Verification
 
-✔ Explore Pods
+After deployment, the application was verified using Kubernetes port forwarding.
 
-✔ Explore Deployments
+The `/info` endpoint returned deployment information similar to:
 
-✔ Explore ReplicaSets
+```json
+{
+  "app_name": "Docker Image Information Dashboard",
+  "app_version": "1.0.10",
+  "build_number": "10",
+  "environment": "Production",
+  "git_commit": "8481176e93715273570cfdf7b2b7b0b5a1f1ef23",
+  "image_tag": "8481176",
+  "status": "Healthy"
+}
+```
 
-✔ Explore Services
+This confirmed that:
 
-✔ Explore ConfigMaps
+```text
+Docker Image Built               ✅
+Image Pushed to AWS ECR          ✅
+Kubernetes Pulled ECR Image      ✅
+New Pod Started                  ✅
+Build Metadata Available         ✅
+Environment = Production         ✅
+Application Status = Healthy     ✅
+```
 
-✔ Explore Secrets
+---
 
-✔ Understand Kubernetes Cluster Management
+# 🐛 Problems Faced and Solutions
 
---------------------------------------------------
+## Problem 1 — Pytest Command Not Found
 
-Interview Questions
--------------------
+Error:
 
-Q1. What is Kubernetes Dashboard?
+```text
+pytest: command not found
+```
 
-Answer:
-Kubernetes Dashboard is the official web-based UI used to manage and monitor Kubernetes clusters.
+### Solution
 
---------------------------------------------------
+Pytest was installed as part of the GitHub Actions dependency installation step.
 
-Q2. What is kubectl?
+---
 
-Answer:
-kubectl is the command-line tool used to interact with the Kubernetes API Server and manage cluster resources.
+## Problem 2 — Python Import Error
 
---------------------------------------------------
+Error:
 
-Q3. What is Minikube?
+```text
+ModuleNotFoundError: No module named 'app'
+```
 
-Answer:
-Minikube is a lightweight single-node Kubernetes cluster used for learning, testing, and development.
+### Solution
 
---------------------------------------------------
+The tests were executed with the project root included in the Python path:
 
-Q4. What is RBAC?
+```bash
+PYTHONPATH=. python3 -m pytest tests/
+```
 
-Answer:
-RBAC (Role-Based Access Control) controls user permissions and determines who can perform actions within a Kubernetes cluster.
+Final result:
 
---------------------------------------------------
+```text
+2 passed
+```
 
-Q5. What is a Service Account?
+---
 
-Answer:
-A Service Account is a Kubernetes identity used by applications or users to securely access the Kubernetes API.
+## Problem 3 — Python Syntax Error
 
---------------------------------------------------
+A syntax error existed in `app.py` because of an incorrectly closed `os.getenv()` call.
 
-Q6. Difference between Role and ClusterRole?
+After correcting the syntax:
 
-Answer:
+```text
+Python Import → Successful
+Pytest        → 2 Passed
+```
 
-Role
-- Namespace-specific permissions
+---
 
-ClusterRole
-- Cluster-wide permissions
+## Problem 4 — No Tests Collected in GitHub Actions
 
---------------------------------------------------
+Initially, GitHub Actions showed:
 
-Q7. Difference between RoleBinding and ClusterRoleBinding?
+```text
+collected 0 items
+```
 
-Answer:
+The updated test files and workflow configuration were committed and pushed correctly.
 
-RoleBinding
-- Assigns a Role within a namespace
+Final result:
 
-ClusterRoleBinding
-- Assigns a ClusterRole across the entire cluster
+```text
+2 passed
+```
 
---------------------------------------------------
+---
 
-Q8. What is a Pod?
+## Problem 5 — ECR Permission Error
 
-Answer:
-A Pod is the smallest deployable unit in Kubernetes and contains one or more containers.
+While setting up ECR, an IAM permission error occurred:
 
---------------------------------------------------
+```text
+AccessDeniedException
 
-Q9. What is a Deployment?
+ecr:CreateRepository
+```
 
-Answer:
-A Deployment manages Pods by creating, updating, scaling, and replacing them automatically.
+The AWS IAM/ECR permissions were reviewed and the ECR repository was configured for the project.
 
---------------------------------------------------
+---
 
-Q10. What is a Namespace?
+## Problem 6 — Kubernetes ImagePullBackOff
 
-Answer:
-A Namespace is used to logically separate Kubernetes resources within the same cluster.
+Error:
 
---------------------------------------------------
+```text
+ImagePullBackOff
+```
 
-Summary
--------
+### Cause
 
-Day 28 focused on Kubernetes cluster management rather than application deployment.
+Kubernetes could not authenticate with the private AWS ECR repository.
 
-A Minikube cluster was successfully created on an EC2 instance. The Kubernetes Dashboard was installed and secured using RBAC with a Service Account and ClusterRoleBinding. The Dashboard was accessed successfully, and various Kubernetes resources such as Nodes, Pods, Deployments, ReplicaSets, Services, ConfigMaps, Secrets, and Namespaces were explored. This hands-on session provided a practical understanding of how Kubernetes clusters are managed using both the Dashboard and kubectl.
+### Solution
 
-==================================================
-End of Day 28
-==================================================
+Created:
+
+```text
+ecr-secret
+```
+
+and added:
+
+```yaml
+imagePullSecrets:
+  - name: ecr-secret
+```
+
+After the fix:
+
+```text
+New Pod → 1/1 Running ✅
+```
+
+---
+
+## Problem 7 — Minikube Website Access
+
+The Minikube NodePort URL was not directly accessible from the external browser as expected because Minikube was running inside the EC2 environment.
+
+For testing, Kubernetes port forwarding was used:
+
+```text
+Browser / Curl
+      │
+      ▼
+EC2 Port
+      │
+      ▼
+kubectl port-forward
+      │
+      ▼
+Kubernetes Service
+      │
+      ▼
+Application Pod
+```
+
+---
+
+# 🏗️ Final Project Architecture
+
+```text
+                    DEVELOPER
+                        │
+                     git push
+                        │
+                        ▼
+                     GITHUB
+                        │
+                        ▼
+                 GITHUB ACTIONS
+                        │
+                        ▼
+             AWS EC2 SELF-HOSTED RUNNER
+                        │
+              ┌─────────┴─────────┐
+              │                   │
+              ▼                   ▼
+           PYTEST            BUILD METADATA
+          2 PASSED       Version / SHA / Build
+              │                   │
+              └─────────┬─────────┘
+                        │
+                        ▼
+                  DOCKER BUILD
+                        │
+                        ▼
+                    AWS ECR
+              Private Image Registry
+                        │
+                        ▼
+                 KUBERNETES
+              Minikube running on EC2
+                        │
+                        ▼
+                 ECR AUTHENTICATION
+                    ecr-secret
+                        │
+                        ▼
+                 PULL DOCKER IMAGE
+                        │
+                        ▼
+                  NEW POD CREATED
+                        │
+                        ▼
+              FLASK + GUNICORN APP
+                        │
+                        ▼
+                  STATUS: HEALTHY ✅
+```
+
+---
+
+# 🔄 Complete Day 28 Workflow
+
+The final automated workflow is:
+
+```text
+1. Developer changes application code
+
+              ↓
+
+2. Code is pushed to GitHub main branch
+
+              ↓
+
+3. GitHub Actions workflow starts automatically
+
+              ↓
+
+4. EC2 self-hosted runner receives the job
+
+              ↓
+
+5. Python dependencies are installed
+
+              ↓
+
+6. Pytest runs automated tests
+
+              ↓
+
+7. CI/CD generates:
+   - App Version
+   - Build Number
+   - Image Tag
+   - Git Commit
+
+              ↓
+
+8. Docker image is built
+
+              ↓
+
+9. Runner authenticates with AWS ECR
+
+              ↓
+
+10. Docker image is pushed to private ECR
+
+              ↓
+
+11. Kubernetes Deployment is updated
+
+              ↓
+
+12. Kubernetes authenticates with ECR
+
+              ↓
+
+13. New Docker image is pulled
+
+              ↓
+
+14. New Kubernetes pod starts
+
+              ↓
+
+15. Old pod is terminated
+
+              ↓
+
+16. Application becomes Healthy ✅
+```
+
+---
+
+# 📚 What I Learned
+
+On Day 28, I learned how to:
+
+- Create an end-to-end CI/CD pipeline.
+- Use GitHub Actions for automation.
+- Configure an EC2 instance as a self-hosted GitHub Actions runner.
+- Run automated Pytest tests before deployment.
+- Stop deployment when tests fail.
+- Containerize a Flask application using Docker.
+- Generate application versions and build metadata automatically.
+- Tag Docker images using Git commit information.
+- Use AWS ECR as a private container registry.
+- Use AWS IAM roles for secure AWS access.
+- Push Docker images automatically from CI/CD to ECR.
+- Deploy container images to Kubernetes.
+- Configure Kubernetes to pull private ECR images.
+- Use Kubernetes `imagePullSecrets`.
+- Troubleshoot `ImagePullBackOff`.
+- Understand Kubernetes rolling updates.
+- Verify deployed versions using build metadata.
+- Troubleshoot Minikube networking and application access.
+
+---
+
+# 🎤 Interview / Viva Questions
+
+## What did you do on Day 28?
+
+> I implemented an end-to-end CI/CD pipeline using GitHub Actions, Docker, AWS ECR, and Kubernetes. I configured an AWS EC2 instance as a self-hosted GitHub Actions runner. Whenever code is pushed to GitHub, the pipeline automatically runs tests, builds a versioned Docker image, pushes it to AWS ECR, and updates the Kubernetes deployment.
+
+---
+
+## What is CI/CD?
+
+> CI, or Continuous Integration, automatically integrates and tests code changes. CD, or Continuous Delivery/Deployment, automates the process of delivering or deploying the tested application.
+
+---
+
+## What was the role of GitHub Actions?
+
+> GitHub Actions automated the CI/CD workflow. It ran tests, built the Docker image, pushed the image to AWS ECR, and updated the Kubernetes deployment.
+
+---
+
+## What was the role of the self-hosted runner?
+
+> The EC2 self-hosted runner executed the GitHub Actions jobs. It had access to Docker, AWS CLI, and Kubernetes tools required by the pipeline.
+
+---
+
+## What was the role of Docker?
+
+> Docker packaged the Flask application, dependencies, runtime, and build metadata into a portable container image.
+
+---
+
+## What was the role of AWS ECR?
+
+> AWS ECR was used as a private container registry to store the Docker images created by the CI/CD pipeline. Kubernetes then pulled those images from ECR for deployment.
+
+---
+
+## What was the role of Kubernetes?
+
+> Kubernetes deployed and managed the application containers. It managed pods, services, image updates, and rolling deployments.
+
+---
+
+## What happens when you push new code?
+
+> A push to the main branch triggers GitHub Actions. The pipeline tests the application, generates build metadata, builds a new Docker image, pushes it to AWS ECR, and updates Kubernetes with the new image.
+
+---
+
+## What is `ImagePullBackOff`?
+
+> `ImagePullBackOff` means Kubernetes is unable to pull the required container image. In this project, it occurred because the AWS ECR repository was private and Kubernetes did not initially have the required authentication.
+
+---
+
+## How did you solve `ImagePullBackOff`?
+
+> I created a Kubernetes Docker registry secret for ECR authentication and configured the Deployment to use it through `imagePullSecrets`.
+
+---
+
+## Why use a unique Docker image tag?
+
+> A unique image tag makes every deployment traceable. In this project, the Git commit SHA was used so I could identify exactly which source-code version created a deployed image.
+
+---
+
+## What is a rolling update?
+
+> A rolling update gradually replaces old application pods with new pods. Kubernetes starts the new version and, once it is ready, terminates the old version.
+
+---
+
+# 📸 Project Proof / Screenshots
+
+Add screenshots from the completed implementation here.
+
+## 1. GitHub Actions — Successful CI/CD Pipeline
+
+> Add screenshot showing all workflow steps completed successfully with green checks.
+
+```text
+[ ADD SCREENSHOT HERE ]
+```
+
+---
+
+## 2. AWS ECR Repository
+
+> Add screenshot showing the `docker-image-dashboard` repository and versioned Docker image.
+
+```text
+[ ADD SCREENSHOT HERE ]
+```
+
+---
+
+## 3. Kubernetes Pod Running
+
+> Add screenshot or terminal output showing:
+
+```text
+READY   STATUS
+1/1     Running
+```
+
+```text
+[ ADD SCREENSHOT HERE ]
+```
+
+---
+
+## 4. Docker Image Information Dashboard
+
+> Add screenshot showing the running dashboard with application version, build number, image tag, environment, and Healthy status.
+
+```text
+[ ADD SCREENSHOT HERE ]
+```
+
+---
+
+# 🔗 Important Links
+
+## Complete Day 28 Project
+
+**GitHub Repository:**
+
+👉 [Docker Image Information Dashboard — CI/CD Project](PASTE_YOUR_GITHUB_PROJECT_LINK_HERE)
+
+Replace:
+
+```text
+PASTE_YOUR_GITHUB_PROJECT_LINK_HERE
+```
+
+with the URL of the separate working project repository.
+
+---
+
+## 30 Days DevOps Repository
+
+**Repository:**
+
+https://github.com/Fatimah-bit0318/devops-30-days-hands-on.git
+
+---
+
+# 🏁 Final Result
+
+Day 28 successfully implemented:
+
+```text
+GitHub
+   ↓
+GitHub Actions
+   ↓
+EC2 Self-Hosted Runner
+   ↓
+Automated Pytest
+   ↓
+Docker Build
+   ↓
+AWS ECR
+   ↓
+Kubernetes
+   ↓
+Rolling Deployment
+   ↓
+Flask Application
+   ↓
+HEALTHY ✅
+```
+
+### Final Status
+
+```text
+Automated Tests          → PASSED ✅
+Docker Image Build       → SUCCESS ✅
+AWS ECR Push             → SUCCESS ✅
+Kubernetes Deployment    → SUCCESS ✅
+Application Status       → HEALTHY ✅
+CI/CD Pipeline           → COMPLETED ✅
+```
+
+---
+
+# ✅ Day 28 Completed
+
+**Topic:** CI/CD with GitHub Actions + Docker + AWS ECR + Kubernetes
+
+**Key Achievement:** Built an automated pipeline where a Git push can trigger testing, Docker image creation, ECR image storage, and Kubernetes deployment.
+
+**Status:** Completed Successfully 🚀

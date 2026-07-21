@@ -1,109 +1,671 @@
-==================================================
-Day 28 - Kubernetes Dashboard Commands
-==================================================
+# Day 28 — CI/CD + AWS ECR + Kubernetes Commands
 
-# Install kubectl
+> These are the main commands used during Day 28.
+>
+> Replace placeholders such as `<AWS_ACCOUNT_ID>` with your own values.
+> Never commit passwords, GitHub runner registration tokens, AWS access keys, or other secrets.
 
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+---
 
-chmod +x kubectl
+## 1. Project Directory
 
-sudo mv kubectl /usr/local/bin/
+```bash
+cd ~/projects/docker-image-dashboard
+pwd
+ls
+```
 
-kubectl version --client
+Check project structure:
 
---------------------------------------------------
+```bash
+find . -maxdepth 2 -type f
+```
 
-# Install Minikube
+---
 
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+## 2. Python Virtual Environment
 
-sudo install minikube-linux-amd64 /usr/local/bin/minikube
+Create virtual environment:
 
-minikube version
+```bash
+python3 -m venv venv
+```
 
---------------------------------------------------
+Activate:
 
-# Start Minikube
+```bash
+source venv/bin/activate
+```
 
-minikube start --driver=docker
+Install dependencies:
 
---------------------------------------------------
+```bash
+pip install -r requirements.txt
+```
 
-# Verify Cluster
+Install Pytest:
 
+```bash
+pip install pytest
+```
+
+---
+
+## 3. Run Automated Tests
+
+```bash
+python3 -m pytest tests/
+```
+
+If Python import path causes an issue:
+
+```bash
+PYTHONPATH=. python3 -m pytest tests/ -v
+```
+
+Expected:
+
+```text
+2 passed
+```
+
+---
+
+## 4. GitHub Actions Workflow
+
+Create workflow directory:
+
+```bash
+mkdir -p .github/workflows
+```
+
+Open workflow:
+
+```bash
+nano .github/workflows/deploy.yml
+```
+
+Check workflow:
+
+```bash
+cat .github/workflows/deploy.yml
+```
+
+---
+
+## 5. GitHub Self-Hosted Runner
+
+Create runner directory:
+
+```bash
+mkdir actions-runner
+cd actions-runner
+```
+
+The runner installation and registration commands should be copied directly from:
+
+```text
+GitHub Repository
+→ Settings
+→ Actions
+→ Runners
+→ New self-hosted runner
+```
+
+Do not save the temporary GitHub runner registration token in a public repository.
+
+Start runner:
+
+```bash
+cd ~/actions-runner
+./run.sh
+```
+
+Expected:
+
+```text
+Connected to GitHub
+
+Listening for Jobs
+```
+
+When CI/CD starts:
+
+```text
+Running job: deploy
+```
+
+Successful result:
+
+```text
+Job deploy completed with result: Succeeded
+```
+
+---
+
+## 6. Check AWS CLI
+
+```bash
+aws --version
+```
+
+Check AWS identity:
+
+```bash
+aws sts get-caller-identity
+```
+
+Check configured region:
+
+```bash
+aws configure get region
+```
+
+Set region if required:
+
+```bash
+aws configure set region eu-north-1
+```
+
+---
+
+## 7. AWS ECR Repository
+
+Create ECR repository if your IAM identity has permission:
+
+```bash
+aws ecr create-repository \
+  --repository-name docker-image-dashboard \
+  --region eu-north-1 \
+  --image-scanning-configuration scanOnPush=true
+```
+
+List repositories:
+
+```bash
+aws ecr describe-repositories \
+  --region eu-north-1
+```
+
+---
+
+## 8. Login to AWS ECR
+
+Use:
+
+```bash
+aws ecr get-login-password --region eu-north-1 | \
+docker login \
+  --username AWS \
+  --password-stdin \
+  <AWS_ACCOUNT_ID>.dkr.ecr.eu-north-1.amazonaws.com
+```
+
+Expected:
+
+```text
+Login Succeeded
+```
+
+---
+
+## 9. Manual Docker Build for Testing
+
+Build:
+
+```bash
+docker build \
+  -t docker-image-dashboard:local \
+  .
+```
+
+Check images:
+
+```bash
+docker images
+```
+
+Run locally:
+
+```bash
+docker run -d \
+  --name docker-dashboard-test \
+  -p 5000:5000 \
+  docker-image-dashboard:local
+```
+
+Test:
+
+```bash
+curl http://127.0.0.1:5000/health
+```
+
+Remove test container:
+
+```bash
+docker rm -f docker-dashboard-test
+```
+
+---
+
+## 10. ECR Docker Image Format
+
+The ECR image follows this format:
+
+```text
+<AWS_ACCOUNT_ID>.dkr.ecr.eu-north-1.amazonaws.com/docker-image-dashboard:<IMAGE_TAG>
+```
+
+Example using placeholders:
+
+```bash
+docker tag docker-image-dashboard:local \
+  <AWS_ACCOUNT_ID>.dkr.ecr.eu-north-1.amazonaws.com/docker-image-dashboard:<IMAGE_TAG>
+```
+
+Push manually if testing:
+
+```bash
+docker push \
+  <AWS_ACCOUNT_ID>.dkr.ecr.eu-north-1.amazonaws.com/docker-image-dashboard:<IMAGE_TAG>
+```
+
+Normally, GitHub Actions performs the build and push automatically.
+
+---
+
+## 11. Check ECR Images
+
+```bash
+aws ecr list-images \
+  --repository-name docker-image-dashboard \
+  --region eu-north-1
+```
+
+---
+
+## 12. Kubernetes Cluster Commands
+
+Check Minikube:
+
+```bash
 minikube status
+```
 
-kubectl cluster-info
+Check nodes:
 
+```bash
 kubectl get nodes
+```
 
-kubectl get pods -A
+Check all major resources:
 
---------------------------------------------------
+```bash
+kubectl get pods
+kubectl get deployments
+kubectl get svc
+```
 
-# Install Kubernetes Dashboard
+Detailed pods:
 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+```bash
+kubectl get pods -o wide
+```
 
---------------------------------------------------
+---
 
-# Create Dashboard Admin User
+## 13. Apply Kubernetes Configuration
 
-kubectl apply -f dashboard-adminuser.yaml
+```bash
+kubectl apply -f k8s/deployment.yaml
+```
 
---------------------------------------------------
+```bash
+kubectl apply -f k8s/service.yaml
+```
 
-# Create ClusterRoleBinding
+Or:
 
-kubectl apply -f dashboard-rolebinding.yaml
+```bash
+kubectl apply -f k8s/
+```
 
---------------------------------------------------
+---
 
-# Generate Dashboard Login Token
+## 14. Check Kubernetes Deployment
 
-kubectl -n kubernetes-dashboard create token admin-user
+```bash
+kubectl get deployment docker-dashboard
+```
 
---------------------------------------------------
+Check pods:
 
-# Launch Dashboard
+```bash
+kubectl get pods
+```
 
-minikube dashboard
+Watch pods:
 
---------------------------------------------------
+```bash
+kubectl get pods -w
+```
 
-# View Kubernetes Resources
+Stop watching with:
 
-kubectl get namespaces
+```text
+Ctrl + C
+```
 
-kubectl get deployments -A
+---
 
-kubectl get replicasets -A
+## 15. Check Current Docker Image
 
-kubectl get services -A
+```bash
+kubectl get deployment docker-dashboard \
+  -o jsonpath='{.spec.template.spec.containers[0].image}'; echo
+```
 
-kubectl get pods -A
+---
 
---------------------------------------------------
+## 16. Update Kubernetes Docker Image
 
-# Troubleshooting Commands
+The CI/CD pipeline performs a command similar to:
 
-kubectl describe pod <pod-name>
+```bash
+kubectl set image deployment/docker-dashboard \
+  dashboard=<AWS_ACCOUNT_ID>.dkr.ecr.eu-north-1.amazonaws.com/docker-image-dashboard:<IMAGE_TAG>
+```
 
-kubectl logs <pod-name>
+Check rollout:
 
---------------------------------------------------
+```bash
+kubectl rollout status deployment/docker-dashboard
+```
 
-# Stop Cluster
+---
 
-minikube stop
+## 17. Create ECR Kubernetes Pull Secret
 
---------------------------------------------------
+Get temporary ECR password:
 
-# Delete Cluster
+```bash
+ECR_PASSWORD=$(aws ecr get-login-password --region eu-north-1)
+```
 
-minikube delete
+Create Kubernetes registry secret:
 
-==================================================
-End of Day 28 Commands
-==================================================
+```bash
+kubectl create secret docker-registry ecr-secret \
+  --docker-server=<AWS_ACCOUNT_ID>.dkr.ecr.eu-north-1.amazonaws.com \
+  --docker-username=AWS \
+  --docker-password="$ECR_PASSWORD"
+```
+
+Clear the temporary shell variable:
+
+```bash
+unset ECR_PASSWORD
+```
+
+Verify:
+
+```bash
+kubectl get secret ecr-secret
+```
+
+Expected type:
+
+```text
+kubernetes.io/dockerconfigjson
+```
+
+---
+
+## 18. Add ECR Secret to Deployment
+
+The Kubernetes Deployment should contain:
+
+```yaml
+spec:
+  imagePullSecrets:
+    - name: ecr-secret
+```
+
+A live Deployment can also be patched with:
+
+```bash
+kubectl patch deployment docker-dashboard \
+  -p '{"spec":{"template":{"spec":{"imagePullSecrets":[{"name":"ecr-secret"}]}}}}'
+```
+
+---
+
+## 19. Troubleshoot ImagePullBackOff
+
+Check pods:
+
+```bash
+kubectl get pods
+```
+
+Describe problematic pod:
+
+```bash
+kubectl describe pod <POD_NAME>
+```
+
+Check recent Kubernetes events:
+
+```bash
+kubectl get events \
+  --sort-by=.metadata.creationTimestamp
+```
+
+Typical problem:
+
+```text
+ImagePullBackOff
+```
+
+Possible cause:
+
+```text
+Private ECR image
++
+Missing/expired authentication
+```
+
+Check Deployment:
+
+```bash
+kubectl describe deployment docker-dashboard
+```
+
+---
+
+## 20. Restart Deployment
+
+```bash
+kubectl rollout restart deployment/docker-dashboard
+```
+
+Check rollout:
+
+```bash
+kubectl rollout status deployment/docker-dashboard
+```
+
+---
+
+## 21. Rollback Deployment
+
+Check rollout history:
+
+```bash
+kubectl rollout history deployment/docker-dashboard
+```
+
+Rollback if necessary:
+
+```bash
+kubectl rollout undo deployment/docker-dashboard
+```
+
+---
+
+## 22. Port Forward Application
+
+```bash
+kubectl port-forward \
+  service/docker-dashboard-service \
+  5001:5000 \
+  --address=0.0.0.0
+```
+
+Keep the terminal running.
+
+Test health:
+
+```bash
+curl http://127.0.0.1:5001/health
+```
+
+Check application information:
+
+```bash
+curl http://127.0.0.1:5001/info
+```
+
+---
+
+## 23. Git Commands
+
+Check changes:
+
+```bash
+git status
+```
+
+Stage Day 28 project changes:
+
+```bash
+git add .
+```
+
+Commit:
+
+```bash
+git commit -m "Complete Day 28 CI/CD with AWS ECR and Kubernetes"
+```
+
+Push:
+
+```bash
+git push origin main
+```
+
+A push to `main` triggers the GitHub Actions CI/CD workflow.
+
+---
+
+## 24. Final Verification Commands
+
+### Check GitHub Actions Runner
+
+```bash
+cd ~/actions-runner
+./run.sh
+```
+
+Expected:
+
+```text
+Job deploy completed with result: Succeeded
+```
+
+### Check ECR
+
+```bash
+aws ecr list-images \
+  --repository-name docker-image-dashboard \
+  --region eu-north-1
+```
+
+### Check Kubernetes
+
+```bash
+kubectl get pods
+```
+
+Expected:
+
+```text
+READY   STATUS
+1/1     Running
+```
+
+### Check deployed image
+
+```bash
+kubectl get deployment docker-dashboard \
+  -o jsonpath='{.spec.template.spec.containers[0].image}'; echo
+```
+
+### Check application
+
+```bash
+curl http://127.0.0.1:5001/info
+```
+
+Expected:
+
+```text
+Environment : Production
+Status      : Healthy
+```
+
+---
+
+# Complete Day 28 Flow
+
+```text
+git push origin main
+
+        ↓
+
+GitHub Actions Triggered
+
+        ↓
+
+Pytest
+
+        ↓
+
+Docker Build
+
+        ↓
+
+AWS ECR Login
+
+        ↓
+
+Push Versioned Image to ECR
+
+        ↓
+
+kubectl set image
+
+        ↓
+
+Kubernetes Rolling Update
+
+        ↓
+
+New Pod Running
+
+        ↓
+
+Application Healthy
+```
+
+**Day 28 Completed**
